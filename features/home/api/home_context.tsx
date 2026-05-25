@@ -1,13 +1,25 @@
-import { children_type } from "@/types/general_types/general_types";
-import { createContext, useContext } from "react";
+"use client";
 
-const Home_Context_Ref_State_Context = createContext<any>(null);
+import { children_type } from "@/types/general_types/general_types";
+import { HomeOverview } from "@/features/home/api/home_model";
+import { createContext, useContext, useState } from "react";
+
+interface HomeContextValue {
+  overview: HomeOverview | null;
+  setOverview: (overview: HomeOverview | null) => void;
+}
+
+const Home_Context_Ref_State_Context = createContext<HomeContextValue | null>(
+  null,
+);
 
 export const Home_Context_Ref_State_Provider = ({
   children,
 }: children_type) => {
+  const [overview, setOverview] = useState<HomeOverview | null>(null);
+
   return (
-    <Home_Context_Ref_State_Context.Provider value={{}}>
+    <Home_Context_Ref_State_Context.Provider value={{ overview, setOverview }}>
       {children}
     </Home_Context_Ref_State_Context.Provider>
   );
