@@ -23,7 +23,7 @@ export const DashboardHeader = ({ fullName }: DashboardHeaderProps) => {
   return (
     <header className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-5">
-        <div className="flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-sm font-bold text-white shadow-md">
+        <div className="flex size-14 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-secondary text-sm font-bold text-[#ffffff] shadow-md">
           {initials || "U"}
         </div>
         <div className="flex flex-col">

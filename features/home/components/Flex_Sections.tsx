@@ -56,7 +56,7 @@ cash backs on all networks.`}
           }
           btn={{
             btnStyles:
-              "text-white bg-[#0a40ed] w-[210px] max-md:px-10 py-[17px] rounded-[4px] font-[300] text-center",
+              "text-[#ffffff] bg-[#0a40ed] w-[210px] max-md:px-10 py-[17px] rounded-[4px] font-[300] text-center",
             btnText: "Get Started",
             btnBgColor: "",
           }}

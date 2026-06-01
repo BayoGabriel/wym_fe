@@ -93,7 +93,7 @@ export default function DashboardPage() {
               onClick={() =>
                 authenticatedRequest && refreshHome(authenticatedRequest)
               }
-              className="mt-4 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
+              className="mt-4 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-[#ffffff] transition hover:bg-primary/90"
             >
               Retry
             </button>

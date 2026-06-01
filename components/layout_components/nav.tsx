@@ -1,8 +1,6 @@
-"use client"
+"use client";
 import Link from "next/link";
 import Nav_List from "../ui_components/nav_list";
-// import Button from "../ui_components/button";
-// import { Logo, BlackLogo } from "../../assets";
 import { IoClose } from "react-icons/io5";
 import { IoIosMenu } from "react-icons/io";
 import { useState, useEffect } from "react";
@@ -14,81 +12,114 @@ const Nav_Bar = ({ logo = false }: { logo?: boolean }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Trigger when user is more than 20px from the top
       setIsAwayFromTop(window.scrollY > 50);
     };
 
-    // Run once on mount (in case user reloads mid-scroll)
     handleScroll();
-
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navTextColor = isAwayFromTop ? "text-secondary" : "text-secondary";
+
   return (
-    <header
-      className={`fixed right-0 left-0 top-0 z-[1000] transition-colors duration-300
-        ${
-          isAwayFromTop ? "bg-white shadow-xs" : "lmd:bg-transparent bg-white"
-        }`}
-    >
-      <nav className="containerclass flex justify-between py-4">
-        <div className="flex gap-20 items-center">
-          {logo ? (
-            <Link href={"/"}>
-              {/* <img src={Logo} alt="logo" /> */}
+    <>
+      <header
+        className={`fixed right-0 left-0 top-0 z-[1000] transition-all duration-300
+          ${
+            isAwayFromTop
+              ? "bg-white/95 backdrop-blur-md shadow-md"
+              : "bg-transparent"
+          }`}
+      >
+        <nav className="containerclass flex justify-between items-center py-4">
+          <div className="flex items-center gap-12">
+            <Link
+              href={"/"}
+              className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
+            >
+              Wymnet
             </Link>
-          ) : (
-            <Link href={"/"}>
-              {/* <img src={BlackLogo} alt="logo" /> */}
-            </Link>
-          )}
 
-          <div className="hidden lmd:flex gap-10 items-center">
-            <Nav_List mobileNav={mobileNav} setMobileNav={setMobileNav} />
-          </div>
-        </div>
-
-        <div
-          className={`fixed z-[999] top-0 bottom-0 left-0 right-0 bg-white lmd:bg-transparent transition-transform duration-300 ease-in-out lmd:hidden
-            ${mobileNav ? "translate-x-0" : "translate-x-full"}`}
-        >
-          <div className="containerclass">
-            <div className="flex flex-col gap-4 h-full">
-              <div className="flex items-center justify-between pt-4">
-                <div className="flex items-center">
-                  <Link href={"/"}>
-                    {/* <img src={Logo} alt="logo" className="h-5" /> */}
-                  </Link>
-                </div>
-                <button
-                  onClick={() => setMobileNav(false)}
-                  className="text-[#292D32]"
-                >
-                  {IoClose({
-                    size: 24,
-                    className: "text-[#101828] cursor-pointer",
-                  })}
-                </button>
-              </div>
-              <div className="flex flex-col gap-4">
-                <Nav_List mobileNav={mobileNav} setMobileNav={setMobileNav} />
-              </div>
+            <div className="hidden lmd:flex gap-8 items-center">
+              <Nav_List mobileNav={mobileNav} setMobileNav={setMobileNav} />
             </div>
           </div>
-        </div>
 
-        <div>
-          <button className="lmd:hidden" onClick={() => setMobileNav(true)}>
-            {IoIosMenu({
-              size: 24,
-              className: "text-[#101828] cursor-pointer",
-            })}
+          <div className="hidden lmd:flex items-center gap-4">
+            <Link
+              href={"/auth/login"}
+              className="px-5 py-2.5 text-sm font-semibold text-secondary hover:text-primary transition-colors"
+            >
+              Login
+            </Link>
+            <App_Button
+              onClick={() => {}}
+              variant="primary"
+              className="px-6 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-200"
+            >
+              Get Started
+            </App_Button>
+          </div>
+
+          <button
+            className="lmd:hidden p-2 rounded-xl hover:bg-primary/10 transition-colors"
+            onClick={() => setMobileNav(true)}
+          >
+            <IoIosMenu size={24} className="text-secondary" />
           </button>
-          {/* <App_Button text="Get Started" /> */}
+        </nav>
+      </header>
+
+      {/* Mobile Menu Overlay */}
+      <div
+        className={`fixed inset-0 z-[999] bg-white lmd:hidden transition-transform duration-300 ease-in-out
+          ${mobileNav ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <div className="containerclass flex flex-col h-full py-6">
+          <div className="flex items-center justify-between mb-8">
+            <Link href={"/"} className="text-2xl font-bold text-primary">
+              Wymnet
+            </Link>
+            <button
+              onClick={() => setMobileNav(false)}
+              className="p-2 rounded-xl hover:bg-primary/10 transition-colors"
+            >
+              <IoClose size={24} className="text-secondary" />
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-6 flex-1">
+            <Nav_List mobileNav={mobileNav} setMobileNav={setMobileNav} />
+          </div>
+
+          <div className="flex flex-col gap-4 pt-6 border-t border-border">
+            <Link
+              href={"/auth/login"}
+              onClick={() => setMobileNav(false)}
+              className="w-full px-6 py-3 text-center text-sm font-semibold text-secondary border border-border rounded-xl hover:bg-primarySoft transition-colors"
+            >
+              Login
+            </Link>
+            <App_Button
+              onClick={() => setMobileNav(false)}
+              variant="primary"
+              className="w-full px-6 py-3 text-sm font-semibold shadow-md"
+            >
+              Get Started
+            </App_Button>
+          </div>
         </div>
-      </nav>
-    </header>
+      </div>
+
+      {/* Backdrop */}
+      {mobileNav && (
+        <div
+          className="fixed inset-0 bg-black/50 z-[998] lmd:hidden"
+          onClick={() => setMobileNav(false)}
+        />
+      )}
+    </>
   );
 };
 

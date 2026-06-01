@@ -76,7 +76,7 @@ const First_Section = () => {
 
             {index === active && (
               <Link href={"/download"}>
-                <button className="lg:block hidden absolute bottom-5 left-4 xmd:left-8 w-fit bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-sm transition-all duration-300">
+                <button className="lg:block hidden absolute bottom-5 left-4 xmd:left-8 w-fit bg-blue-600 hover:bg-blue-700 text-[#ffffff] px-5 py-2 rounded-full text-sm transition-all duration-300">
                   Buy Airtime
                 </button>
               </Link>

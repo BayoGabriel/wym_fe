@@ -24,6 +24,10 @@
   --color-primarySoft: var(--primary-soft);
   --color-success: var(--success);
   --color-error: var(--error);
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-primaryBtnBg: #2a68ed;
+  --color-secondary: #0f172a;
 
   --font-sans: "Inter", sans-serif;
   --font-aeonik: "Aeonik-Pro", sans-serif;

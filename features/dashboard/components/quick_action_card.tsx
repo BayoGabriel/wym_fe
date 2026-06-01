@@ -22,7 +22,7 @@ export const QuickActionCard = ({
       className="group flex w-full flex-col gap-5 rounded-3xl border border-border bg-surface p-6 text-left shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md active:scale-[0.99]"
     >
       <div className="flex items-center justify-between">
-        <div className="flex size-12 items-center justify-center rounded-2xl bg-primarySoft text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-white">
+        <div className="flex size-12 items-center justify-center rounded-2xl bg-primarySoft text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-[#ffffff]">
           {icon}
         </div>
         <Icon_ArrowRight className="size-5 text-muted-foreground opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:text-primary" />

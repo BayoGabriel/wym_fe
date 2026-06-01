@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Drop_Down } from "@/assets";
 import { Nav_Data } from "@/data/constants/footer_data";
 import Link from "next/link";
@@ -29,18 +29,9 @@ const Nav_List = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [mobileNav]);
 
-  // const toggleDropDown = (name: string) => {
-  //   if (dropDown === name) {
-  //     setDropDown("");
-  //   } else {
-  //     setDropDown(name);
-  //   }
-  // };
-
-  // Common handler for any link click
   const handleLinkClick = () => {
-    setMobileNav(false); // close mobile menu
-    setDropDown(""); // close dropdown
+    setMobileNav(false);
+    setDropDown("");
   };
 
   return (
@@ -51,7 +42,7 @@ const Nav_List = ({
             <Link
               href={data.href}
               onClick={handleLinkClick}
-              className="lmd:font-bold hover:text-[#FD5E1D]"
+              className="text-sm font-medium text-secondary hover:text-primary transition-colors lmd:text-base"
             >
               {data.name}
             </Link>
@@ -62,46 +53,22 @@ const Nav_List = ({
               className="lmd:relative"
               onMouseOver={() => setDropDown(data.name)}
               onMouseLeave={() => setDropDown("")}
-              style={{ padding: "8px 5px" }}
             >
-              <div className="flex items-center gap-4 justify-between cursor-pointer">
-                <p className="lmd:font-bold">{data.name}</p>
+              <button className="flex items-center gap-2 text-sm font-medium text-secondary hover:text-primary transition-colors lmd:text-base">
+                {data.name}
                 <Drop_Down />
-              </div>
+              </button>
 
-              {/* {dropDown === data.name && (
-                <div className="lmd:absolute bg-white grid gap-3 p-1 rounded-lg lmd:border lmd:border-[#F2F4F7] lmd:top-full lmd:mt-2 lmd:left-0 lmd:w-60 z-30 xmd:shadow-xl mt-2">
-                  {data.subLink.map((link) => (
-                    <Link
-                      to={link.href}
-                      key={link.name}
-                      onClick={handleLinkClick}
-                      className="flex gap-4 items-center font-inter font-medium text-[#101828] p-2 hover:bg-[#FD5E1D] hover:text-white"
-                    >
-                      <span>{link.icon()}</span>
-                      <span>{link.name}</span>
-                    </Link>
-                  ))}
-                </div>
-              )} */}
               {dropDown === data.name && (
-                <ul
-                  className="dropdown-animate lmd:absolute transition-all duration-500 ease-in-out bg-white delay-500 grid gap-3 p-1 rounded-lg 
-                 lmd:border lmd:border-[#F2F4F7] lmd:top-full lmd:mt-[-1px] lmd:left-0 
-                 lmd:w-60 z-30 mt-[-1px]"
-                >
+                <ul className="lmd:absolute top-full left-0 mt-2 w-56 bg-white border border-border rounded-xl shadow-lg overflow-hidden z-50 transition-all duration-200">
                   {data.subLink.map((link, index) => (
-                    <li
-                      key={link.name}
-                      style={{ animationDelay: `${0 + index * 0.1}s` }} // stagger like demo
-                      className="w-full"
-                    >
+                    <li key={link.name} className="w-full">
                       <Link
                         href={link.href}
                         onClick={handleLinkClick}
-                        className="flex gap-4 items-center font-inter font-medium text-[#101828] p-2 hover:bg-[#FD5E1D] hover:text-white w-full"
+                        className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-secondary hover:bg-primarySoft hover:text-primary transition-colors w-full"
                       >
-                        <span>{link.icon()}</span>
+                        <span className="text-primary">{link.icon()}</span>
                         <span>{link.name}</span>
                       </Link>
                     </li>

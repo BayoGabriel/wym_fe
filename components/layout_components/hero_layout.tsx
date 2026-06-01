@@ -16,7 +16,7 @@ const Hero_Layout = ({
 }: Hero_Layout_Props) => {
   return (
     <section className={`relative ${sectionClassName}`}>
-      <div className="w-[95%] max-w-screen-xl 3xl:max-w-xlg mx-auto text-white flex flex-col items-center xmd:flex-row gap-4 justify-between relative h-fit overflow-hidden py-6 xmd:py-[8rem] lg:py-[6rem]">
+      <div className="w-[95%] max-w-screen-xl 3xl:max-w-xlg mx-auto text-[#ffffff] flex flex-col items-center xmd:flex-row gap-4 justify-between relative h-fit overflow-hidden py-6 xmd:py-[8rem] lg:py-[6rem]">
         {children}
       </div>
       {lower && (

@@ -5,8 +5,8 @@ import {
 } from "@/types/component_types/ui_types";
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: "bg-primary text-white hover:bg-primary/90",
-  secondary: "bg-secondary text-white hover:bg-secondary/90",
+  primary: "bg-primary text-[#ffffff] hover:bg-primary/90",
+  secondary: "bg-secondary text-[#ffffff] hover:bg-secondary/90",
   outline:
     "border border-border bg-surface text-secondary hover:bg-primarySoft",
 };

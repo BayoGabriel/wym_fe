@@ -46,20 +46,20 @@ export const WalletCard = ({
   );
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-secondary via-secondary to-primary p-6 text-white shadow-lg sm:p-8 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]">
+    <section className="relative overflow-hidden rounded-3xl border border-border bg-gradient-to-br from-secondary via-secondary to-primary p-6 text-[#ffffff] shadow-lg sm:p-8 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]">
       <div className="absolute -right-16 -top-16 size-64 rounded-full bg-white/10 blur-3xl opacity-30" />
       <div className="absolute -left-16 -bottom-16 size-64 rounded-full bg-primary/20 blur-3xl opacity-30" />
 
       <div className="relative flex items-start justify-between gap-6">
         <div>
-          <div className="flex items-center gap-2 text-white/90">
+          <div className="flex items-center gap-2 text-[#ffffff]/90">
             <Icon_Wallet className="size-5" />
-            <App_Text as="span" variant="caption" className="text-white/60">
+            <App_Text as="span" variant="caption" className="text-[#ffffff]/60">
               Wallet Balance
             </App_Text>
           </div>
           <div className="mt-4 flex items-center gap-4">
-            <App_Text as="span" variant="title" className="text-white">
+            <App_Text as="span" variant="title" className="text-[#ffffff]">
               {formatted}
             </App_Text>
             <button
@@ -83,18 +83,24 @@ export const WalletCard = ({
 
       <div className="relative mt-8 grid gap-4 sm:grid-cols-2">
         <div className="rounded-2xl bg-white/10 p-5 shadow-sm backdrop-blur-sm">
-          <App_Text variant="caption" className="text-white/60">
+          <App_Text variant="caption" className="text-[#ffffff]/60">
             Account Number
           </App_Text>
-          <App_Text variant="subtitle" className="mt-2 text-white font-medium">
+          <App_Text
+            variant="subtitle"
+            className="mt-2 text-[#ffffff] font-medium"
+          >
             {accountNumber || "Not available"}
           </App_Text>
         </div>
         <div className="rounded-2xl bg-white/10 p-5 shadow-sm backdrop-blur-sm">
-          <App_Text variant="caption" className="text-white/60">
+          <App_Text variant="caption" className="text-[#ffffff]/60">
             Bank
           </App_Text>
-          <App_Text variant="subtitle" className="mt-2 text-white font-medium">
+          <App_Text
+            variant="subtitle"
+            className="mt-2 text-[#ffffff] font-medium"
+          >
             {bankName || "Not available"}
           </App_Text>
         </div>
@@ -111,7 +117,7 @@ export const WalletCard = ({
         <App_Button
           onClick={onTransfer}
           variant="outline"
-          className="border-white/30 bg-white/10 text-white hover:bg-white/20 shadow-md transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+          className="border-white/30 bg-white/10 text-[#ffffff] hover:bg-white/20 shadow-md transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
         >
           Transfer
         </App_Button>
