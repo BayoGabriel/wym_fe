@@ -36,7 +36,7 @@ const Hero = ({
         className={`w-full xmd:w-[50%] flex flex-col gap-4 xmd:gap-8 pb-4 ${styles.container}`}
       >
         <h2
-          className={` font-[700] text-[38px] md:text-[65px] md:leading-[64px] font-aeonik ${styles.titleStyle}`}
+          className={`font-[700] text-[38px] md:text-[65px] md:leading-[64px] font-aeonik ${styles.titleStyle}`}
         >
           {title}
         </h2>

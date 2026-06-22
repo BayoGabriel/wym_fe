@@ -1,34 +1,11 @@
-import { Protection } from "@/assets";
-
 export const Nav_Data = [
   {
-    name: "Features",
-    subLink: [
-      {
-        name: "Credit Card Builder",
-        href: "/credit-card",
-        icon: Protection,
-      },
-      {
-        name: "Savings Account",
-        href: "/current-account",
-        icon: Protection,
-      },
-      {
-        name: "Send Money Home",
-        href: "/send-money",
-        icon: Protection,
-      },
-      {
-        name: "Overdraft Protection",
-        href: "/global",
-        icon: Protection,
-      },
-    ],
+    name: "Telecoms",
+    href: "/telecoms",
   },
   {
-    name: "About Us",
-    href: "/about",
+    name: "Fintech",
+    href: "/fintech",
   },
   {
     name: "Help",

@@ -5,10 +5,12 @@ import { IoClose } from "react-icons/io5";
 import { IoIosMenu } from "react-icons/io";
 import { useState, useEffect } from "react";
 import { App_Button } from "../ui_components/app_button";
+import { useRouter } from "next/navigation";
 
 const Nav_Bar = ({ logo = false }: { logo?: boolean }) => {
   const [mobileNav, setMobileNav] = useState(false);
   const [isAwayFromTop, setIsAwayFromTop] = useState(false);
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,48 +34,44 @@ const Nav_Bar = ({ logo = false }: { logo?: boolean }) => {
               : "bg-transparent"
           }`}
       >
-        <nav className="containerclass flex justify-between items-center py-4">
-          <div className="flex items-center gap-12">
-            <Link
-              href={"/"}
-              className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
-            >
-              Wymnet
-            </Link>
+        <nav className="containerclass py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Link
+                href={"/"}
+                className="text-2xl font-bold text-primary hover:text-primary/80 transition-colors"
+              >
+                Wymnet
+              </Link>
+            </div>
 
-            <div className="hidden lmd:flex gap-8 items-center">
+            <div className="hidden lg:flex flex-1 justify-center items-center gap-8">
               <Nav_List mobileNav={mobileNav} setMobileNav={setMobileNav} />
             </div>
-          </div>
 
-          <div className="hidden lmd:flex items-center gap-4">
-            <Link
-              href={"/auth/login"}
-              className="px-5 py-2.5 text-sm font-semibold text-secondary hover:text-primary transition-colors"
-            >
-              Login
-            </Link>
-            <App_Button
-              onClick={() => {}}
-              variant="primary"
-              className="px-6 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-200"
-            >
-              Get Started
-            </App_Button>
-          </div>
+            <div className="hidden lg:flex items-center gap-4">
+              <App_Button
+                onClick={() => router.push('/auth/login')}
+                variant="secondary"
+                className="px-6 py-2.5 text-sm font-semibold shadow-md hover:shadow-lg transition-all duration-200"
+              >
+                Get Started
+              </App_Button>
+            </div>
 
-          <button
-            className="lmd:hidden p-2 rounded-xl hover:bg-primary/10 transition-colors"
-            onClick={() => setMobileNav(true)}
-          >
-            <IoIosMenu size={24} className="text-secondary" />
-          </button>
+            <button
+              className="lg:hidden p-2 rounded-xl hover:bg-primary/10 transition-colors"
+              onClick={() => setMobileNav(true)}
+            >
+              <IoIosMenu size={24} className="text-secondary" />
+            </button>
+          </div>
         </nav>
       </header>
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-[999] bg-white lmd:hidden transition-transform duration-300 ease-in-out
+        className={`fixed inset-0 z-[999] bg-white lg:hidden transition-transform duration-300 ease-in-out
           ${mobileNav ? "translate-x-0" : "translate-x-full"}`}
       >
         <div className="containerclass flex flex-col h-full py-6">
@@ -112,10 +110,9 @@ const Nav_Bar = ({ logo = false }: { logo?: boolean }) => {
         </div>
       </div>
 
-      {/* Backdrop */}
       {mobileNav && (
         <div
-          className="fixed inset-0 bg-black/50 z-[998] lmd:hidden"
+          className="fixed inset-0 bg-black/50 z-[998] lg:hidden"
           onClick={() => setMobileNav(false)}
         />
       )}

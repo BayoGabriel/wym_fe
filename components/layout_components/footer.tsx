@@ -2,7 +2,6 @@ import { appName } from "@/data/constants/app_name";
 import { Footer_Data } from "@/data/constants/footer_data";
 import Link from "next/link";
 
-
 const Footer = () => {
   return (
     <footer className="bg-[#191C1F] text-[#D7D7D7] py-12 mx-auto w-full">
@@ -21,14 +20,14 @@ const Footer = () => {
             {Footer_Data.map((data) => (
               <div className="flex flex-col gap-3">
                 <h5 className="text-[#FD5E1D]">{data.title}</h5>
-                {data.subLinks.map((link) => (
-                  <>
+                {data.subLinks.map((link, idx) => (
+                  <div key={idx}>
                     {link.href ? (
                       <Link href={link.href}>{link.name}</Link>
                     ) : (
                       <p className="cursor-pointer">{link.name}</p>
                     )}
-                  </>
+                  </div>
                 ))}
               </div>
             ))}

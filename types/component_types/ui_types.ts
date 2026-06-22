@@ -18,3 +18,16 @@ export interface AppInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   error?: string;
 }
+
+export type Card = {
+  src?: string;
+  alt?: string;
+  className?: string;
+  content?: React.ReactNode;
+};
+
+export type ImageCardGridProps = {
+  cards?: Card[];
+  containerClassName?: string;
+  showCard?: boolean;
+};

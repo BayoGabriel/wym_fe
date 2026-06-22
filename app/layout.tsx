@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { App_Providers } from "@/app/providers";
+import Scroll_To_Top from "@/components/layout_components/scroll_to_top";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,8 +16,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Wynmet",
-  description:
-    "",
+  description: "",
 };
 
 export default function RootLayout({
@@ -30,7 +30,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <App_Providers>{children}</App_Providers>
+        <App_Providers>
+          <Scroll_To_Top />
+          {children}
+        </App_Providers>
       </body>
     </html>
   );
