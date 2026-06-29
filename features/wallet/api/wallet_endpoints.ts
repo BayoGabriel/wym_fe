@@ -1,4 +1,7 @@
-import { authenticatedRequest, requestJson } from "@/features/auth/api/auth_endpoints";
+import {
+  authenticatedRequest,
+  requestJson,
+} from "@/features/auth/api/auth_endpoints";
 
 export type MyWalletResponse = {
   balance: number;
@@ -8,6 +11,8 @@ export type MyWalletResponse = {
   reservedAccount: any;
 };
 
-export const getMyWallet = async (request: typeof authenticatedRequest): Promise<MyWalletResponse> => {
-  return request("/wallet/me", { method: "GET" });
+export const getMyWallet = async (
+  request: typeof authenticatedRequest,
+): Promise<MyWalletResponse> => {
+  return request("/wallets/me", { method: "GET" });
 };

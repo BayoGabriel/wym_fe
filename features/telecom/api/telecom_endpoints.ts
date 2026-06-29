@@ -1,13 +1,20 @@
-import { authenticatedRequest, requestJson } from "@/features/auth/api/auth_endpoints";
+import { requestJson } from "@/features/auth/api/auth_endpoints";
+
+type AuthedRequest = <T>(path: string, init?: RequestInit) => Promise<T>;
 
 export type TelecomNetworksResponse = {
-  airtimeNetworks: Array<{ name?: string; code?: string } & Record<string, any>>;
+  airtimeNetworks: Array<
+    { name?: string; code?: string } & Record<string, any>
+  >;
   dataNetworks: Array<{ name?: string; code?: string } & Record<string, any>>;
 };
 
-export const getTelecomNetworks = async (): Promise<TelecomNetworksResponse> => {
-  return requestJson<TelecomNetworksResponse>("/telecom/networks", { method: "GET" });
-};
+export const getTelecomNetworks =
+  async (): Promise<TelecomNetworksResponse> => {
+    return requestJson<TelecomNetworksResponse>("/telecom/networks", {
+      method: "GET",
+    });
+  };
 
 export type DataPlansResponse = {
   plans?: Array<{
@@ -20,16 +27,27 @@ export type DataPlansResponse = {
   [k: string]: any;
 };
 
-export const getDataPlans = async (network: string): Promise<DataPlansResponse> => {
+export const getDataPlans = async (
+  network: string,
+): Promise<DataPlansResponse> => {
   const qs = new URLSearchParams({ network });
-  return requestJson<DataPlansResponse>(`/telecom/data/plans?${qs.toString()}`, {
-    method: "GET",
-  });
+  return requestJson<DataPlansResponse>(
+    `/telecom/data/plans?${qs.toString()}`,
+    {
+      method: "GET",
+    },
+  );
 };
 
 export const purchaseAirtime = (
-  request: typeof authenticatedRequest,
-  payload: { internalReference: string; network: string; amount: number; mobileNumber: string; provider?: "peyflex" }
+  request: AuthedRequest,
+  payload: {
+    internalReference: string;
+    network: string;
+    amount: number;
+    mobileNumber: string;
+    provider?: "peyflex";
+  },
 ) =>
   request<{ transaction: any }>("/telecom/airtime/purchase", {
     method: "POST",
@@ -37,8 +55,14 @@ export const purchaseAirtime = (
   });
 
 export const purchaseData = (
-  request: typeof authenticatedRequest,
-  payload: { internalReference: string; network: string; planCode: string; mobileNumber: string; provider?: "peyflex" }
+  request: AuthedRequest,
+  payload: {
+    internalReference: string;
+    network: string;
+    planCode: string;
+    mobileNumber: string;
+    provider?: "peyflex";
+  },
 ) =>
   request<{ transaction: any }>("/telecom/data/purchase", {
     method: "POST",

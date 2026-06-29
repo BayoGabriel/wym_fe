@@ -18,14 +18,19 @@ export const QuickActionCard = ({
     <button
       type="button"
       onClick={onClick}
-      className="group flex flex-col gap-2 items-center justify-center"
+      className="group flex flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-surface px-5 py-4 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0"
     >
-      <div className="flex size-12 items-center justify-center rounded-2xl text-secondary bg-primary/10 transition-colors duration-300 group-hover:bg-primary/15">
+      <div className="flex size-12 items-center justify-center rounded-xl text-secondary bg-primary/10 ring-1 ring-primary/10 transition-colors duration-300 group-hover:bg-primary/15">
         {icon}
       </div>
-      <App_Text variant="body" className="text-secondary">
+      <App_Text variant="body" className="text-secondary font-semibold">
         {title}
       </App_Text>
+      {description ? (
+        <App_Text variant="caption" className="text-muted">
+          {description}
+        </App_Text>
+      ) : null}
     </button>
   );
 };

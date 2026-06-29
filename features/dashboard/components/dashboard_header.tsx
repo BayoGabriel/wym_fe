@@ -1,4 +1,5 @@
 import { App_Text } from "@/components/ui_components/app_text";
+import Link from "next/link";
 import { CgProfile } from "react-icons/cg";
 
 type DashboardHeaderProps = {
@@ -14,7 +15,9 @@ export const DashboardHeader = ({ fullName }: DashboardHeaderProps) => {
       >
         Hi, {fullName}
       </App_Text>
-      <CgProfile size={24} />
+      <Link href="/dashboard/profile">
+        <CgProfile size={24} className="text-primary" />
+      </Link>
     </header>
   );
 };

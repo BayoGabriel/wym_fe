@@ -8,7 +8,7 @@ export type AppTextProps<T extends ElementType> = {
 } & Omit<ComponentPropsWithoutRef<T>, "as" | "className">;
 
 const variantStyles: Record<TextVariant, string> = {
-  title: "text-3xl font-semibold tracking-tight text-secondary sm:text-4xl",
+  title: "text-xl font-semibold tracking-tight text-secondary sm:text-4xl",
   subtitle: "text-base font-medium text-secondary/90 sm:text-lg",
   body: "text-sm leading-6 text-muted sm:text-base",
   caption: "text-xs font-medium uppercase tracking-[0.18em] text-muted",

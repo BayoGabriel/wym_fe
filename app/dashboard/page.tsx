@@ -119,30 +119,29 @@ export default function DashboardPage() {
           onTransfer={handleTransfer}
         />
 
-        <section>
-          {/* <App_Text variant="subtitle">Quick Actions</App_Text> */}
-          <div className="mt-4 flex gap-4 items-center max-md:justify-between">
+        <section className="mt-4">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <QuickActionCard
               title="Buy Airtime"
-              description="Recharge your phone instantly"
+              description="Recharge instantly"
               icon={<Icon_Phone className="size-5" />}
               onClick={handleBuyAirtime}
             />
             <QuickActionCard
               title="Buy Data"
-              description="Get data bundles for any network"
+              description="Bundles for any network"
               icon={<Icon_Phone className="size-5" />}
               onClick={handleBuyData}
             />
             <QuickActionCard
-              title="Add fund"
-              description="Add money to your wallet"
+              title="Add funds"
+              description="Top up your wallet"
               icon={<Icon_ArrowUpRight className="size-5" />}
               onClick={handleFundWallet}
             />
             <QuickActionCard
               title="Transactions"
-              description="View your transaction history"
+              description="View history"
               icon={<Icon_History className="size-5" />}
               onClick={handleViewTransactions}
             />

@@ -16,32 +16,41 @@ export type SupportTicketPayload = {
   message: string;
 };
 
-export const submitAccountUpdateRequest = (payload: AccountUpdateRequestPayload) =>
-  authenticatedRequest<{ request: any }>(
-    "/user/account-update-requests",
-    {
-      method: "POST",
-      body: JSON.stringify(payload),
-    },
-  );
+export type UpdateProfilePayload = Partial<{
+  firstName: string;
+  lastName: string;
+  email: string | null;
+  phone: string | null;
+  countryCode: string;
+  preferredCurrency: string | null;
+}>;
+
+export const submitAccountUpdateRequest = (
+  payload: AccountUpdateRequestPayload,
+) =>
+  authenticatedRequest<{ request: any }>("/user/account-update-requests", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
 
 export const getMyAccountUpdateRequests = () =>
-  authenticatedRequest<{ requests: any[] }>(
-    "/user/account-update-requests",
-    { method: "GET" },
-  );
+  authenticatedRequest<{ requests: any[] }>("/user/account-update-requests", {
+    method: "GET",
+  });
 
 export const submitSupportTicket = (payload: SupportTicketPayload) =>
-  authenticatedRequest<{ ticket: any }>(
-    "/user/support-tickets",
-    {
-      method: "POST",
-      body: JSON.stringify(payload),
-    },
-  );
+  authenticatedRequest<{ ticket: any }>("/user/support-tickets", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
 
 export const getMySupportTickets = () =>
-  authenticatedRequest<{ tickets: any[] }>(
-    "/user/support-tickets",
-    { method: "GET" },
-  );
+  authenticatedRequest<{ tickets: any[] }>("/user/support-tickets", {
+    method: "GET",
+  });
+
+export const updateMyProfile = (payload: UpdateProfilePayload) =>
+  authenticatedRequest<{ user: any }>("/user/me", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });

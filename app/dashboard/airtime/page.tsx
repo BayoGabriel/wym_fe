@@ -5,21 +5,34 @@ import { Use_Auth_Context } from "@/features/auth/api/auth_context";
 import { App_Text } from "@/components/ui_components/app_text";
 import { App_Input } from "@/components/ui_components/app_input";
 import { App_Button } from "@/components/ui_components/app_button";
-import { getTelecomNetworks, purchaseAirtime } from "@/features/telecom/api/telecom_endpoints";
+import {
+  getTelecomNetworks,
+  purchaseAirtime,
+} from "@/features/telecom/api/telecom_endpoints";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import AirtelLogo from "@/assets/svgs/airtel.svg";
+import MtnLogo from "@/assets/svgs/mtn.svg";
+import GloLogo from "@/assets/svgs/glo.svg";
+import NineMobileLogo from "@/assets/svgs/9mobile.svg";
+import { App_Select } from "@/components/ui_components/app_select";
+import { IoChevronBack } from "react-icons/io5";
 
 const NETWORKS = ["MTN", "Airtel", "9Mobile", "Glo"] as const;
 
 export default function BuyAirtimePage() {
   const router = useRouter();
-  const { isAuthenticated, isHydrated, authenticatedRequest } = Use_Auth_Context();
+  const { isAuthenticated, isHydrated, authenticatedRequest } =
+    Use_Auth_Context();
 
   const [mobileNumber, setMobileNumber] = useState("");
   const [amount, setAmount] = useState<number>(0);
   const [network, setNetwork] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [networks, setNetworks] = useState<Array<{ name?: string; code?: string }>>([]);
+  const [networks, setNetworks] = useState<
+    Array<{ name?: string; code?: string }>
+  >([]);
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -42,6 +55,16 @@ export default function BuyAirtimePage() {
     void bootstrap();
   }, []);
 
+  const getLogo = (id: string) => {
+    const key = id.toLowerCase();
+    if (key.includes("mtn")) return { src: MtnLogo, alt: "MTN" };
+    if (key.includes("airtel")) return { src: AirtelLogo, alt: "Airtel" };
+    if (key.includes("glo")) return { src: GloLogo, alt: "Glo" };
+    if (key.includes("9mobile") || key.includes("etisalat"))
+      return { src: NineMobileLogo, alt: "9Mobile" };
+    return null;
+  };
+
   const canSubmit = useMemo(() => {
     return mobileNumber.trim().length >= 6 && amount > 0 && network;
   }, [mobileNumber, amount, network]);
@@ -60,7 +83,8 @@ export default function BuyAirtimePage() {
       });
       router.push("/dashboard/transactions");
     } catch (e) {
-      const msg = e instanceof Error ? e.message : "Unable to complete purchase";
+      const msg =
+        e instanceof Error ? e.message : "Unable to complete purchase";
       if (/insufficient/i.test(msg)) {
         router.push("/dashboard/fund");
         return;
@@ -72,30 +96,46 @@ export default function BuyAirtimePage() {
   };
 
   return (
-    <main className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:px-10">
+    <main className="min-h-screen bg-background px-2 py-6 lg:px-10">
       <div className="mx-auto w-full max-w-2xl">
-        <App_Text variant="title">Buy Airtime</App_Text>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="inline-flex items-center justify-center rounded-xl border border-border bg-surface p-2 text-secondary transition hover:bg-primarySoft"
+            aria-label="Go back"
+          >
+            <IoChevronBack size={18} />
+          </button>
+          <App_Text variant="title">Buy Airtime</App_Text>
+        </div>
         <section className="mt-6 rounded-3xl border border-border bg-surface p-6 shadow-panel/10">
           <div className="grid gap-5">
             <div>
               <App_Text variant="caption">Select Network</App_Text>
-              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {networks.map((n) => (
-                  <button
-                    key={n.code}
-                    type="button"
-                    onClick={() => setNetwork(n.code!)}
-                    className={[
-                      "flex items-center justify-center gap-2 rounded-xl border px-3 py-3 text-sm font-medium transition-all",
-                      network === n.code
-                        ? "border-primary bg-primary/5 text-primary"
-                        : "border-border bg-background hover:bg-primarySoft",
-                    ].join(" ")}
-                  >
-                    <span className="size-6 rounded-full bg-border" aria-hidden />
-                    <span className="truncate">{n.name}</span>
-                  </button>
-                ))}
+              <div className="mt-3">
+                <App_Select
+                  id="network"
+                  label="Network"
+                  value={network}
+                  onChange={(v) => setNetwork(v)}
+                  options={networks.map((n) => ({
+                    label: n.name ?? n.code ?? "",
+                    value: n.code!,
+                  }))}
+                  placeholder="Choose network"
+                  getIcon={(v) => {
+                    const l = getLogo(v);
+                    return l ? (
+                      <Image
+                        src={l.src as unknown as string}
+                        alt={l.alt}
+                        width={20}
+                        height={20}
+                      />
+                    ) : null;
+                  }}
+                />
               </div>
             </div>
 
@@ -119,9 +159,7 @@ export default function BuyAirtimePage() {
               onChange={(e) => setAmount(Number(e.currentTarget.value || 0))}
             />
 
-            {error ? (
-              <p className="text-sm text-error">{error}</p>
-            ) : null}
+            {error ? <p className="text-sm text-error">{error}</p> : null}
 
             <App_Button
               onClick={handleSubmit}

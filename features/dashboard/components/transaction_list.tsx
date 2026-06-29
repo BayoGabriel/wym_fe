@@ -14,7 +14,7 @@ const statusColor = (status: string) => {
     return "text-error bg-error/10 border-error/20";
   if (s === "pending" || s === "processing")
     return "text-amber-600 bg-amber-500/10 border-amber-500/20";
-  return "text-muted-foreground bg-muted/10 border-border";
+  return "text-muted bg-muted/10 border-border";
 };
 
 const sourceIconColor = (source: string) => {
@@ -28,11 +28,9 @@ export const TransactionList = ({
   onViewAll,
 }: TransactionListProps) => {
   return (
-    <section className="rounded-3xl border border-[#1f2937] bg-[#0f1720] p-6 shadow-sm transition-all duration-200 hover:shadow-md">
+    <section className="rounded-3xl border border-border bg-surface p-6 shadow-sm transition-all duration-200 hover:shadow-md">
       <div className="flex items-center justify-between gap-3">
-        <App_Text variant="subtitle" className="text-gray-100">
-          Recent transactions
-        </App_Text>
+        <App_Text variant="subtitle">Recent transactions</App_Text>
         <button
           type="button"
           onClick={onViewAll}
@@ -42,16 +40,19 @@ export const TransactionList = ({
         </button>
       </div>
 
-      <div className="mt-5 divide-y divide-[#1f2937]">
+      <div className="mt-5 divide-y divide-border">
         {transactions.length === 0 ? (
-          <App_Text variant="body" className="py-8 text-gray-400">
-            No transactions yet.
-          </App_Text>
+          <div className="rounded-2xl border border-border bg-background p-8 text-center">
+            <App_Text variant="subtitle">No transactions yet</App_Text>
+            <App_Text variant="body" className="mt-2 text-muted">
+              Your activity will appear here once you start using your wallet.
+            </App_Text>
+          </div>
         ) : (
           transactions.map((t) => (
             <div
               key={t.id}
-              className="flex items-center justify-between gap-4 py-5 transition-all duration-200 hover:bg-[#0b1220]"
+              className="flex items-center justify-between gap-4 py-5 transition-all duration-200 hover:bg-primarySoft"
             >
               <div className="flex min-w-0 items-center gap-4">
                 <div
@@ -60,20 +61,17 @@ export const TransactionList = ({
                   <Icon_Circle className="size-5" />
                 </div>
                 <div className="min-w-0">
-                  <App_Text
-                    variant="subtitle"
-                    className="truncate text-gray-100"
-                  >
+                  <App_Text variant="subtitle" className="truncate">
                     {t.source === "telecom" ? "Telecom" : "Wallet"}:{" "}
                     {t.transactionType}
                   </App_Text>
-                  <App_Text variant="body" className="mt-1 text-gray-400">
+                  <App_Text variant="body" className="mt-1">
                     {new Date(t.timestamp).toLocaleString()}
                   </App_Text>
                 </div>
               </div>
               <div className="flex shrink-0 items-center gap-4">
-                <App_Text variant="subtitle" className="text-gray-100">
+                <App_Text variant="subtitle">
                   {t.amount.toLocaleString("en-NG", {
                     maximumFractionDigits: 2,
                   })}

@@ -4,9 +4,20 @@ import { useEffect, useMemo, useState } from "react";
 import { Use_Auth_Context } from "@/features/auth/api/auth_context";
 import { App_Text } from "@/components/ui_components/app_text";
 import { App_Input } from "@/components/ui_components/app_input";
+import { App_Select } from "@/components/ui_components/app_select";
 import { App_Button } from "@/components/ui_components/app_button";
-import { getDataPlans, getTelecomNetworks, purchaseData } from "@/features/telecom/api/telecom_endpoints";
+import {
+  getDataPlans,
+  getTelecomNetworks,
+  purchaseData,
+} from "@/features/telecom/api/telecom_endpoints";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import AirtelLogo from "@/assets/svgs/airtel.svg";
+import MtnLogo from "@/assets/svgs/mtn.svg";
+import GloLogo from "@/assets/svgs/glo.svg";
+import NineMobileLogo from "@/assets/svgs/9mobile.svg";
+import { IoChevronBack } from "react-icons/io5";
 
 const NETWORKS = ["MTN", "Airtel", "9Mobile", "Glo"] as const;
 
@@ -14,7 +25,8 @@ type Plan = { code: string; name: string; amount: number };
 
 export default function BuyDataPage() {
   const router = useRouter();
-  const { isAuthenticated, isHydrated, authenticatedRequest } = Use_Auth_Context();
+  const { isAuthenticated, isHydrated, authenticatedRequest } =
+    Use_Auth_Context();
 
   const [mobileNumber, setMobileNumber] = useState("");
   const [network, setNetwork] = useState<string>("");
@@ -23,7 +35,9 @@ export default function BuyDataPage() {
   const [loading, setLoading] = useState(false);
   const [loadingPlans, setLoadingPlans] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [networks, setNetworks] = useState<Array<{ name?: string; code?: string }>>([]);
+  const [networks, setNetworks] = useState<
+    Array<{ name?: string; code?: string }>
+  >([]);
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -34,10 +48,23 @@ export default function BuyDataPage() {
     const bootstrap = async () => {
       try {
         const resp = await getTelecomNetworks();
-        const list = (resp?.dataNetworks ?? []).map((n: any) => ({
-          name: String(n.name ?? n.network ?? n.code ?? n),
-          code: String(n.code ?? n.network ?? n.name ?? n),
-        }));
+        const list = (resp?.dataNetworks ?? []).map((n: any) => {
+          const name = String(
+            n.name ?? n.title ?? n.label ?? n.network ?? n.code ?? n,
+          );
+          const code = String(
+            n.code ??
+              n.slug ??
+              n.value ??
+              n.network_code ??
+              n.identifier ??
+              n.id ??
+              n.network ??
+              n.name ??
+              n,
+          );
+          return { name, code };
+        });
         setNetworks(list);
       } catch {
         setNetworks(NETWORKS.map((n) => ({ name: n, code: n })));
@@ -45,6 +72,16 @@ export default function BuyDataPage() {
     };
     void bootstrap();
   }, []);
+
+  const getLogo = (id: string) => {
+    const key = id.toLowerCase();
+    if (key.includes("mtn")) return { src: MtnLogo, alt: "MTN" };
+    if (key.includes("airtel")) return { src: AirtelLogo, alt: "Airtel" };
+    if (key.includes("glo")) return { src: GloLogo, alt: "Glo" };
+    if (key.includes("9mobile") || key.includes("etisalat"))
+      return { src: NineMobileLogo, alt: "9Mobile" };
+    return null;
+  };
 
   useEffect(() => {
     const loadPlans = async () => {
@@ -57,11 +94,29 @@ export default function BuyDataPage() {
       try {
         const resp = await getDataPlans(network);
         const raw = (resp as any)?.plans ?? [];
-        const mapped: Plan[] = raw.map((p: any) => ({
-          code: String(p.plan_code ?? p.planCode ?? p.code ?? p.name ?? Math.random()),
-          name: String(p.name ?? p.description ?? p.plan_name ?? p.planCode ?? p.plan_code),
-          amount: Number(p.amount ?? p.price ?? 0),
-        }));
+        const mapped: Plan[] = raw.map((p: any) => {
+          const code = String(
+            p.plan_code ?? p.planCode ?? p.code ?? p.name ?? Math.random(),
+          );
+          const amount = Number(p.amount ?? p.price ?? 0);
+          const label = String(
+            p.label ??
+              p.name ??
+              p.description ??
+              p.plan_name ??
+              p.planCode ??
+              p.plan_code ??
+              "",
+          );
+          let display = label;
+          const m = label.match(/^\s*([^=]+)=\s*[^()]+(\([^)]*\)).*$/);
+          if (m) {
+            const size = m[1].trim();
+            const validity = m[2];
+            display = `${size} valid for ${validity}`;
+          }
+          return { code, name: display, amount };
+        });
         setPlans(mapped);
       } catch (e) {
         setPlans([]);
@@ -72,9 +127,15 @@ export default function BuyDataPage() {
     void loadPlans();
   }, [network]);
 
+  const mobileDigits = useMemo(
+    () => mobileNumber.replace(/\D/g, ""),
+    [mobileNumber],
+  );
   const canSubmit = useMemo(() => {
-    return mobileNumber.trim().length >= 6 && network && selectedPlan;
-  }, [mobileNumber, network, selectedPlan]);
+    return (
+      mobileDigits.length >= 10 && Boolean(network) && Boolean(selectedPlan)
+    );
+  }, [mobileDigits.length, network, selectedPlan]);
 
   const handleSubmit = async () => {
     if (!authenticatedRequest) return;
@@ -86,11 +147,12 @@ export default function BuyDataPage() {
         internalReference,
         network,
         planCode: selectedPlan,
-        mobileNumber,
+        mobileNumber: mobileDigits,
       });
       router.push("/dashboard/transactions");
     } catch (e) {
-      const msg = e instanceof Error ? e.message : "Unable to complete purchase";
+      const msg =
+        e instanceof Error ? e.message : "Unable to complete purchase";
       if (/insufficient/i.test(msg)) {
         router.push("/dashboard/fund");
         return;
@@ -104,29 +166,43 @@ export default function BuyDataPage() {
   return (
     <main className="min-h-screen bg-background px-4 py-6 sm:px-6 lg:px-10">
       <div className="mx-auto w-full max-w-2xl">
-        <App_Text variant="title">Buy Data</App_Text>
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="inline-flex items-center justify-center rounded-xl border border-border bg-surface p-2 text-secondary transition hover:bg-primarySoft"
+            aria-label="Go back"
+          >
+            <IoChevronBack size={18} />
+          </button>
+          <App_Text variant="title">Buy Data</App_Text>
+        </div>
         <section className="mt-6 rounded-3xl border border-border bg-surface p-6 shadow-panel/10">
           <div className="grid gap-5">
             <div>
               <App_Text variant="caption">Select Network</App_Text>
-              <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {networks.map((n) => (
-                  <button
-                    key={n.code}
-                    type="button"
-                    onClick={() => setNetwork(n.code!)}
-                    className={[
-                      "flex items-center justify-center gap-2 rounded-xl border px-3 py-3 text-sm font-medium transition-all",
-                      network === n.code
-                        ? "border-primary bg-primary/5 text-primary"
-                        : "border-border bg-background hover:bg-primarySoft",
-                    ].join(" ")}
-                  >
-                    <span className="size-6 rounded-full bg-border" aria-hidden />
-                    <span className="truncate">{n.name}</span>
-                  </button>
-                ))}
-              </div>
+              <App_Select
+                id="network"
+                label="Network"
+                value={network}
+                onChange={(v) => setNetwork(v)}
+                options={networks.map((n) => ({
+                  label: n.name ?? n.code ?? "",
+                  value: n.code!,
+                }))}
+                placeholder="Choose network"
+                getIcon={(v) => {
+                  const l = getLogo(v);
+                  return l ? (
+                    <Image
+                      src={l.src as unknown as string}
+                      alt={l.alt}
+                      width={20}
+                      height={20}
+                    />
+                  ) : null;
+                }}
+              />
             </div>
 
             <App_Input
@@ -140,37 +216,30 @@ export default function BuyDataPage() {
 
             <div>
               <App_Text variant="caption">Select Plan</App_Text>
-              <div className="mt-3 grid gap-3">
+              <div className="mt-3">
                 {loadingPlans ? (
-                  <div className="h-24 animate-pulse rounded-xl border border-border bg-surface" />
+                  <div className="h-12 animate-pulse rounded-xl border border-border bg-surface" />
                 ) : plans.length === 0 ? (
                   <App_Text variant="body" className="text-muted">
                     No plans available.
                   </App_Text>
                 ) : (
-                  plans.map((p) => (
-                    <button
-                      key={p.code}
-                      type="button"
-                      onClick={() => setSelectedPlan(p.code)}
-                      className={[
-                        "flex items-center justify-between rounded-xl border px-4 py-3 text-left text-sm transition-all",
-                        selectedPlan === p.code
-                          ? "border-primary bg-primary/5 text-primary"
-                          : "border-border bg-background hover:bg-primarySoft",
-                      ].join(" ")}
-                    >
-                      <span className="truncate">{p.name}</span>
-                      <span className="shrink-0 font-semibold text-secondary">₦{p.amount.toLocaleString("en-NG")}</span>
-                    </button>
-                  ))
+                  <App_Select
+                    id="plan"
+                    label="Plan"
+                    value={selectedPlan}
+                    onChange={(v) => setSelectedPlan(v)}
+                    options={plans.map((p) => ({
+                      label: `${p.name} • ₦${p.amount.toLocaleString("en-NG")}`,
+                      value: p.code,
+                    }))}
+                    placeholder="Choose plan"
+                  />
                 )}
               </div>
             </div>
 
-            {error ? (
-              <p className="text-sm text-error">{error}</p>
-            ) : null}
+            {error ? <p className="text-sm text-error">{error}</p> : null}
 
             <App_Button
               onClick={handleSubmit}
