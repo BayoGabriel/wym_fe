@@ -1,7 +1,6 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -43,19 +42,6 @@ const config: Config = {
         xm2xl: "1800px",
         "3xl": "1930px",
         m3xl: "2000px",
-      },
-
-      colors: {
-        primaryBtnBg: "#2A68ED",
-        primary: "#2563EB",
-        primarySoft: "#EFF6FF",
-        secondary: "#0F172A",
-        muted: "#64748B",
-        background: "#F8FAFC",
-        surface: "#FFFFFF",
-        border: "#E2E8F0",
-        success: "#16A34A",
-        error: "#DC2626",
       },
 
       boxShadow: {

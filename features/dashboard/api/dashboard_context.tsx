@@ -1,8 +1,14 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react";
 
-import { DashboardHomeResponse } from "@/features/dashboard/api/dashboard_model";
+import { DashboardHomeResponse } from "@/types/dashboard_types";
 import { getDashboardHome } from "@/features/dashboard/api/dashboard_endpoints";
 import { children_type } from "@/types/general_types/general_types";
 

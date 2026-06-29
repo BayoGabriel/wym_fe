@@ -15,7 +15,7 @@ export const Auth_Shell = ({ title, subtitle, children }: AuthShellProps) => {
             <div className="space-y-8">
               <div className="space-y-3">
                 <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">
-                  Wynmet Finance
+                  Wynmet
                 </span>
                 <DoubleText subtitle={subtitle} title={title} />
               </div>

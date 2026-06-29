@@ -32,11 +32,11 @@ export const AnalyticsCard = ({
         : "bg-muted/10 text-muted-foreground";
 
   return (
-    <section className="rounded-3xl border border-border bg-surface p-6 shadow-sm transition-all duration-200 hover:shadow-md">
-      <App_Text variant="caption" className="text-muted-foreground">
+    <section className="rounded-3xl border border-[#1f2937] bg-[#0f1720] p-6 shadow-sm transition-all duration-200 hover:shadow-md">
+      <App_Text variant="caption" className="text-gray-400">
         {label}
       </App_Text>
-      <App_Text variant="subtitle" className="mt-3">
+      <App_Text variant="subtitle" className="mt-3 text-gray-100">
         {value}
       </App_Text>
       {trendLabel ? (
@@ -47,9 +47,9 @@ export const AnalyticsCard = ({
         </span>
       ) : null}
       {pct === null ? null : (
-        <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-border">
+        <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-[#111827]">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-primary to-secondary"
+            className="h-full rounded-full bg-primary"
             style={{ width: `${pct}%` }}
           />
         </div>

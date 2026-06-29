@@ -1,6 +1,6 @@
 import { App_Text } from "@/components/ui_components/app_text";
 import { Icon_Circle } from "@/components/ui_components/app_icons";
-import { DashboardRecentTransaction } from "@/features/dashboard/api/dashboard_model";
+import { DashboardRecentTransaction } from "@/types/dashboard_types";
 
 type TransactionListProps = {
   transactions: DashboardRecentTransaction[];
@@ -28,9 +28,11 @@ export const TransactionList = ({
   onViewAll,
 }: TransactionListProps) => {
   return (
-    <section className="rounded-3xl border border-border bg-surface p-6 shadow-sm transition-all duration-200 hover:shadow-md">
+    <section className="rounded-3xl border border-[#1f2937] bg-[#0f1720] p-6 shadow-sm transition-all duration-200 hover:shadow-md">
       <div className="flex items-center justify-between gap-3">
-        <App_Text variant="subtitle">Recent transactions</App_Text>
+        <App_Text variant="subtitle" className="text-gray-100">
+          Recent transactions
+        </App_Text>
         <button
           type="button"
           onClick={onViewAll}
@@ -40,16 +42,16 @@ export const TransactionList = ({
         </button>
       </div>
 
-      <div className="mt-5 divide-y divide-border">
+      <div className="mt-5 divide-y divide-[#1f2937]">
         {transactions.length === 0 ? (
-          <App_Text variant="body" className="py-8 text-muted-foreground">
+          <App_Text variant="body" className="py-8 text-gray-400">
             No transactions yet.
           </App_Text>
         ) : (
           transactions.map((t) => (
             <div
               key={t.id}
-              className="flex items-center justify-between gap-4 py-5 transition-all duration-200 hover:bg-muted/30"
+              className="flex items-center justify-between gap-4 py-5 transition-all duration-200 hover:bg-[#0b1220]"
             >
               <div className="flex min-w-0 items-center gap-4">
                 <div
@@ -58,20 +60,20 @@ export const TransactionList = ({
                   <Icon_Circle className="size-5" />
                 </div>
                 <div className="min-w-0">
-                  <App_Text variant="subtitle" className="truncate">
+                  <App_Text
+                    variant="subtitle"
+                    className="truncate text-gray-100"
+                  >
                     {t.source === "telecom" ? "Telecom" : "Wallet"}:{" "}
                     {t.transactionType}
                   </App_Text>
-                  <App_Text
-                    variant="body"
-                    className="mt-1 text-muted-foreground"
-                  >
+                  <App_Text variant="body" className="mt-1 text-gray-400">
                     {new Date(t.timestamp).toLocaleString()}
                   </App_Text>
                 </div>
               </div>
               <div className="flex shrink-0 items-center gap-4">
-                <App_Text variant="subtitle" className="text-secondary">
+                <App_Text variant="subtitle" className="text-gray-100">
                   {t.amount.toLocaleString("en-NG", {
                     maximumFractionDigits: 2,
                   })}

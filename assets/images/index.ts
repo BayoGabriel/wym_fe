@@ -16,7 +16,10 @@ import Three from "./3.webp";
 import Four from "./6.webp";
 import Five from "./5.webp";
 import HomeHeroAtm from "./HomeHeroAtm.webp";
+import Auth from "./auth.webp";
+
 export {
+  Auth,
   Home_Hero_Image,
   WomanYello,
   Group,

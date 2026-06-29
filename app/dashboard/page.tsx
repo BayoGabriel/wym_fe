@@ -62,15 +62,15 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-background px-4 py-8 sm:px-6 lg:px-10">
+      <main className="min-h-screen bg-[#0B0F14] px-4 py-8 sm:px-6 lg:px-10 text-gray-100">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-          <div className="h-32 animate-pulse rounded-3xl bg-border" />
-          <div className="h-64 animate-pulse rounded-3xl bg-border" />
+          <div className="h-32 animate-pulse rounded-3xl bg-[#111827]" />
+          <div className="h-64 animate-pulse rounded-3xl bg-[#111827]" />
           <div className="grid gap-4 md:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-32 animate-pulse rounded-3xl bg-border"
+                className="h-32 animate-pulse rounded-3xl bg-[#111827]"
               />
             ))}
           </div>
@@ -81,9 +81,9 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <main className="min-h-screen bg-background px-4 py-8 sm:px-6 lg:px-10">
+      <main className="min-h-screen bg-[#0B0F14] px-4 py-8 sm:px-6 lg:px-10 text-gray-100">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-          <section className="rounded-3xl border border-border bg-surface p-6">
+          <section className="rounded-3xl border border-[#1f2937] bg-[#0f1720] p-6">
             <App_Text variant="subtitle">Error loading dashboard</App_Text>
             <App_Text variant="body" className="mt-2">
               {error}
@@ -93,7 +93,7 @@ export default function DashboardPage() {
               onClick={() =>
                 authenticatedRequest && refreshHome(authenticatedRequest)
               }
-              className="mt-4 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-[#ffffff] transition hover:bg-primary/90"
+              className="mt-4 rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-primary/90"
             >
               Retry
             </button>
@@ -106,8 +106,8 @@ export default function DashboardPage() {
   if (!home) return null;
 
   return (
-    <main className="min-h-screen bg-background px-4 py-8 sm:px-6 lg:px-10">
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
+    <main className="min-h-screen bg-background px-2 max-lg:py-4 py-8 sm:px-6 lg:px-10">
+      <div className="mx-auto flex w-full flex-col gap-6">
         <DashboardHeader fullName={home.user.fullName} />
 
         <WalletCard
@@ -120,8 +120,8 @@ export default function DashboardPage() {
         />
 
         <section>
-          <App_Text variant="subtitle">Quick Actions</App_Text>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {/* <App_Text variant="subtitle">Quick Actions</App_Text> */}
+          <div className="mt-4 flex gap-4 items-center max-md:justify-between">
             <QuickActionCard
               title="Buy Airtime"
               description="Recharge your phone instantly"
@@ -135,7 +135,7 @@ export default function DashboardPage() {
               onClick={handleBuyData}
             />
             <QuickActionCard
-              title="Fund Wallet"
+              title="Add fund"
               description="Add money to your wallet"
               icon={<Icon_ArrowUpRight className="size-5" />}
               onClick={handleFundWallet}
