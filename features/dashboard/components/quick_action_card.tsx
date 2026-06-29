@@ -20,10 +20,10 @@ export const QuickActionCard = ({
       onClick={onClick}
       className="group flex flex-col gap-2 items-center justify-center"
     >
-      <div className="flex size-12 items-center justify-center rounded-2xl text-[#111827] transition-colors duration-300">
+      <div className="flex size-12 items-center justify-center rounded-2xl text-secondary bg-primary/10 transition-colors duration-300 group-hover:bg-primary/15">
         {icon}
       </div>
-      <App_Text variant="body" className="text-gray-100">
+      <App_Text variant="body" className="text-secondary">
         {title}
       </App_Text>
     </button>

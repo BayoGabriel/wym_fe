@@ -62,15 +62,15 @@ export default function DashboardPage() {
 
   if (isLoading) {
     return (
-      <main className="min-h-screen bg-[#0B0F14] px-4 py-8 sm:px-6 lg:px-10 text-gray-100">
+      <main className="min-h-screen bg-background px-4 py-8 sm:px-6 lg:px-10">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-          <div className="h-32 animate-pulse rounded-3xl bg-[#111827]" />
-          <div className="h-64 animate-pulse rounded-3xl bg-[#111827]" />
+          <div className="h-32 animate-pulse rounded-3xl border border-border bg-surface" />
+          <div className="h-64 animate-pulse rounded-3xl border border-border bg-surface" />
           <div className="grid gap-4 md:grid-cols-4">
             {[1, 2, 3, 4].map((i) => (
               <div
                 key={i}
-                className="h-32 animate-pulse rounded-3xl bg-[#111827]"
+                className="h-32 animate-pulse rounded-3xl border border-border bg-surface"
               />
             ))}
           </div>
@@ -81,9 +81,9 @@ export default function DashboardPage() {
 
   if (error) {
     return (
-      <main className="min-h-screen bg-[#0B0F14] px-4 py-8 sm:px-6 lg:px-10 text-gray-100">
+      <main className="min-h-screen bg-background px-4 py-8 sm:px-6 lg:px-10">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-          <section className="rounded-3xl border border-[#1f2937] bg-[#0f1720] p-6">
+          <section className="rounded-3xl border border-border bg-surface p-6">
             <App_Text variant="subtitle">Error loading dashboard</App_Text>
             <App_Text variant="body" className="mt-2">
               {error}

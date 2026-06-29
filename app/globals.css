@@ -1,14 +1,11 @@
 @import "tailwindcss";
 
-
 :root {
   --background: #f8fafc;
   --primary: #0f172a;
   --surface: #ffffff;
   --border: #e2e8f0;
-  --muted: rgb(203, 204, 206)
-  /* --primary: #2563eb; */
-  --primary-soft: #eff6ff;
+  --muted: rgb(203, 204, 206) /* --primary: #2563eb; */ --primary-soft: #eff6ff;
   --success: #16a34a;
   --error: #dc2626;
 }
@@ -19,6 +16,7 @@
   --color-surface: var(--surface);
   --color-border: var(--border);
   --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted);
   --color-primary: var(--primary);
   --color-primarySoft: var(--primary-soft);
   --color-success: var(--success);
