@@ -1,4 +1,4 @@
-import { requestJson } from "@/features/auth/api/auth_endpoints";
+import { authenticatedRequest } from "@/features/auth/api/auth_endpoints";
 
 type AuthedRequest = <T>(path: string, init?: RequestInit) => Promise<T>;
 
@@ -11,7 +11,7 @@ export type TelecomNetworksResponse = {
 
 export const getTelecomNetworks =
   async (): Promise<TelecomNetworksResponse> => {
-    return requestJson<TelecomNetworksResponse>("/telecom/networks", {
+    return authenticatedRequest<TelecomNetworksResponse>("/telecom/networks", {
       method: "GET",
     });
   };
@@ -31,7 +31,7 @@ export const getDataPlans = async (
   network: string,
 ): Promise<DataPlansResponse> => {
   const qs = new URLSearchParams({ network });
-  return requestJson<DataPlansResponse>(
+  return authenticatedRequest<DataPlansResponse>(
     `/telecom/data/plans?${qs.toString()}`,
     {
       method: "GET",
@@ -46,7 +46,7 @@ export const purchaseAirtime = (
     network: string;
     amount: number;
     mobileNumber: string;
-    provider?: "peyflex";
+    provider?: "peyflex" | "reloadly";
   },
 ) =>
   request<{ transaction: any }>("/telecom/airtime/purchase", {
@@ -61,7 +61,7 @@ export const purchaseData = (
     network: string;
     planCode: string;
     mobileNumber: string;
-    provider?: "peyflex";
+    provider?: "peyflex" | "reloadly";
   },
 ) =>
   request<{ transaction: any }>("/telecom/data/purchase", {

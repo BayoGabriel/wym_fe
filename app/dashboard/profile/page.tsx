@@ -39,8 +39,8 @@ export default function ProfilePage() {
   useEffect(() => {
     if (!user) return;
     setForm({
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: user.firstName as any,
+      lastName: user.lastName as any,
       email: user.email ?? "",
       phone: user.phone ?? "",
     });

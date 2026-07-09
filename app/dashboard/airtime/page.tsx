@@ -22,7 +22,7 @@ const NETWORKS = ["MTN", "Airtel", "9Mobile", "Glo"] as const;
 
 export default function BuyAirtimePage() {
   const router = useRouter();
-  const { isAuthenticated, isHydrated, authenticatedRequest } =
+  const { isAuthenticated, isHydrated, authenticatedRequest, user } =
     Use_Auth_Context();
 
   const [mobileNumber, setMobileNumber] = useState("");
@@ -34,12 +34,18 @@ export default function BuyAirtimePage() {
     Array<{ name?: string; code?: string }>
   >([]);
 
+  const currencyCode = (user?.currencyCode ?? "NGN").toUpperCase();
+  const countryCode = (user?.countryCode ?? "NG").toUpperCase();
+  const phonePlaceholder =
+    countryCode === "CA" ? "e.g. 6475551234" : "e.g. 08012345678";
+
   useEffect(() => {
     if (!isHydrated) return;
     if (!isAuthenticated) router.replace("/auth/login");
   }, [isAuthenticated, isHydrated, router]);
 
   useEffect(() => {
+    if (!isHydrated || !isAuthenticated) return;
     const bootstrap = async () => {
       try {
         const resp = await getTelecomNetworks();
@@ -52,8 +58,9 @@ export default function BuyAirtimePage() {
         setNetworks(NETWORKS.map((n) => ({ name: n, code: n })));
       }
     };
+
     void bootstrap();
-  }, []);
+  }, [isAuthenticated, isHydrated]);
 
   const getLogo = (id: string) => {
     const key = id.toLowerCase();
@@ -143,14 +150,14 @@ export default function BuyAirtimePage() {
               id="mobileNumber"
               label="Mobile Number"
               type="tel"
-              placeholder="e.g. 08012345678"
+              placeholder={phonePlaceholder}
               value={mobileNumber}
               onChange={(e) => setMobileNumber(e.currentTarget.value)}
             />
 
             <App_Input
               id="amount"
-              label="Amount (NGN)"
+              label={`Amount (${currencyCode})`}
               type="number"
               min={50}
               step={50}

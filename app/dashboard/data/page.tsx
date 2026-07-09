@@ -25,7 +25,7 @@ type Plan = { code: string; name: string; amount: number };
 
 export default function BuyDataPage() {
   const router = useRouter();
-  const { isAuthenticated, isHydrated, authenticatedRequest } =
+  const { isAuthenticated, isHydrated, authenticatedRequest, user } =
     Use_Auth_Context();
 
   const [mobileNumber, setMobileNumber] = useState("");
@@ -39,12 +39,18 @@ export default function BuyDataPage() {
     Array<{ name?: string; code?: string }>
   >([]);
 
+  const currencyCode = (user?.currencyCode ?? "NGN").toUpperCase();
+  const countryCode = (user?.countryCode ?? "NG").toUpperCase();
+  const phonePlaceholder =
+    countryCode === "CA" ? "e.g. 6475551234" : "e.g. 08012345678";
+
   useEffect(() => {
     if (!isHydrated) return;
     if (!isAuthenticated) router.replace("/auth/login");
   }, [isAuthenticated, isHydrated, router]);
 
   useEffect(() => {
+    if (!isHydrated || !isAuthenticated) return;
     const bootstrap = async () => {
       try {
         const resp = await getTelecomNetworks();
@@ -52,17 +58,19 @@ export default function BuyDataPage() {
           const name = String(
             n.name ?? n.title ?? n.label ?? n.network ?? n.code ?? n,
           );
-          const code = String(
+          // Prefer operatorId/id for Reloadly (Canada), else fallback to code-like fields
+          const value =
+            n.operatorId ??
+            n.id ??
             n.code ??
-              n.slug ??
-              n.value ??
-              n.network_code ??
-              n.identifier ??
-              n.id ??
-              n.network ??
-              n.name ??
-              n,
-          );
+            n.slug ??
+            n.value ??
+            n.network_code ??
+            n.identifier ??
+            n.network ??
+            n.name ??
+            n;
+          const code = String(value);
           return { name, code };
         });
         setNetworks(list);
@@ -71,7 +79,7 @@ export default function BuyDataPage() {
       }
     };
     void bootstrap();
-  }, []);
+  }, [isAuthenticated, isHydrated]);
 
   const getLogo = (id: string) => {
     const key = id.toLowerCase();
@@ -209,7 +217,7 @@ export default function BuyDataPage() {
               id="mobileNumber"
               label="Mobile Number"
               type="tel"
-              placeholder="e.g. 08012345678"
+              placeholder={phonePlaceholder}
               value={mobileNumber}
               onChange={(e) => setMobileNumber(e.currentTarget.value)}
             />
@@ -230,7 +238,7 @@ export default function BuyDataPage() {
                     value={selectedPlan}
                     onChange={(v) => setSelectedPlan(v)}
                     options={plans.map((p) => ({
-                      label: `${p.name} • ₦${p.amount.toLocaleString("en-NG")}`,
+                      label: `${p.name} • ${currencyCode === "NGN" ? "₦" : ""}${p.amount.toLocaleString("en-US")}`,
                       value: p.code,
                     }))}
                     placeholder="Choose plan"
