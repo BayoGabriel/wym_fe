@@ -56,6 +56,10 @@ export default function DashboardPage() {
     router.push("/dashboard/data");
   };
 
+  const handleBills = () => {
+    router.push("/dashboard/bills");
+  };
+
   const handleViewTransactions = () => {
     router.push("/dashboard/transactions");
   };
@@ -122,16 +126,10 @@ export default function DashboardPage() {
         <section className="mt-4">
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <QuickActionCard
-              title="Buy Airtime"
-              description="Recharge instantly"
+              title="Bills"
+              description="Airtime, Data, Cable, Electricity"
               icon={<Icon_Phone className="size-5" />}
-              onClick={handleBuyAirtime}
-            />
-            <QuickActionCard
-              title="Buy Data"
-              description="Bundles for any network"
-              icon={<Icon_Phone className="size-5" />}
-              onClick={handleBuyData}
+              onClick={handleBills}
             />
             <QuickActionCard
               title="Add funds"
