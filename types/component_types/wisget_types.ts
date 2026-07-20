@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 export interface Simple_Flex_Props {
   img: {
-    img: string;
+    img: any;
     imgPosition?: string;
     imgSm?: string;
     imgStyle?: string;

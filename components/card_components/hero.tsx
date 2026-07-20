@@ -5,7 +5,7 @@ interface Hero_Props {
   title: string;
   title2?: string;
   subText: string;
-  img: string;
+  img: any;
   btnText: string;
   styles: {
     imgContainer?: string;
@@ -31,7 +31,7 @@ const Hero = ({
   isabsolute = false,
 }: Hero_Props) => {
   return (
-    <div className='w-full containerclass flex lg:items-center gap-2 max-lg:flex-col'>
+    <div className="w-full containerclass flex lg:items-center gap-2 max-lg:flex-col">
       <div
         className={`w-full xmd:w-[50%] flex flex-col gap-4 xmd:gap-8 pb-4 ${styles.container}`}
       >

@@ -1,4 +1,5 @@
 import { ChildrenProps } from "@/types/general_types/general_types";
+import Image from "next/image";
 
 interface Hero_Layout_Props extends ChildrenProps {
   sectionClassName?: string;
@@ -25,7 +26,7 @@ const Hero_Layout = ({
             cash ? cash : "bottom-0 right-0"
           }`}
         >
-          <img src={bgImage} alt="global" className="w-full" />
+          <Image src={bgImage} alt="global" className="w-full" />
         </div>
       )}
     </section>

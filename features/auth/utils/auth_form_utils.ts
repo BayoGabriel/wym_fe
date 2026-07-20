@@ -36,17 +36,36 @@ export const validateLoginForm = (values: LoginFormValues) => {
   if (!values.password) errors.password = "Password is required.";
   return errors;
 };
+export type SignupFormErrors =
+  Partial<Record<keyof SignupFormValues | "terms", string>>;
 
-export const validateSignupForm = (values: SignupFormValues) => {
-  const errors: Partial<Record<keyof SignupFormValues, string>> = {};
+export const validateSignupForm = (
+  values: SignupFormValues
+): SignupFormErrors => {
+  const errors: SignupFormErrors = {};
+
   Object.assign(errors, validateLoginForm(values));
-  if (!values.firstName.trim()) errors.firstName = "First name is required.";
-  if (!values.lastName.trim()) errors.lastName = "Last name is required.";
-  if (!values.countryCode.trim()) errors.countryCode = "Country code is required.";
-  if (values.password.length < 8) errors.password = "Password must be at least 8 characters.";
+
+  if (!values.firstName.trim()) {
+    errors.firstName = "First name is required.";
+  }
+
+  if (!values.lastName.trim()) {
+    errors.lastName = "Last name is required.";
+  }
+
+  if (!values.countryCode.trim()) {
+    errors.countryCode = "Country code is required.";
+  }
+
+  if (values.password.length < 8) {
+    errors.password = "Password must be at least 8 characters.";
+  }
+
   if (values.confirmPassword !== values.password) {
     errors.confirmPassword = "Passwords do not match.";
   }
+
   return errors;
 };
 

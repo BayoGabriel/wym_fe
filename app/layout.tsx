@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { App_Providers } from "@/app/providers";
 import Scroll_To_Top from "@/components/layout_components/scroll_to_top";
+import AOSInit from "@/components/layout_components/AOSInit";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <App_Providers>
           <Scroll_To_Top />
+          <AOSInit />
           {children}
         </App_Providers>
       </body>

@@ -19,7 +19,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "react-router-dom": ["./src/compat/react-router-dom.tsx"]
     }
   },
   "include": [
