@@ -76,24 +76,6 @@ const Seamless_Payments = () => {
       },
       layout: "right-image" as const,
     },
-    // {
-    //   preText: "Virtual Cards",
-    //   title: "Explore Global Spending",
-    //   text: `${appName} virtual cards are your ticket to the world. With virtual cards, you can buy, hold or spend currencies across borders, with no limits! ${appName} also allows you to hold and swap foreign currencies seamlessly!`,
-    //   link: `Try Dollar Card`,
-    //   linkStyle: "text-[#0B40EE]",
-    //   linkTo: ROUTES.VIRTUAL,
-    //   img: Hand,
-    //   colors: {
-    //     text: "#363F52",
-    //     title: "#101828",
-    //     link: "",
-    //     preText: "#5E19B3",
-    //     gradient1: "#DCFFC7",
-    //     gradient2: "#F1F8E5",
-    //   },
-    //   layout: "full-width" as const,
-    // },
   ];
 
   return (
