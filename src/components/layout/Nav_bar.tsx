@@ -1,8 +1,10 @@
-"use client"
+"use client";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import NavList from "../NavList";
 import Link from "next/link";
+import Image from "next/image";
+import Logo from "@/assets/images/logo.png";
 
 interface Navbar_Props {
   bgColor: string;
@@ -61,7 +63,7 @@ const Nav_Bar = ({
     <Fragment>
       <header
         className={`${scroll ? "bg-white" : bgColor} py-4 sticky z-[150] top-0`}
-        style={{paddingTop: 20}}
+        style={{ paddingTop: 20 }}
       >
         {/* nav */}
         <nav
@@ -70,7 +72,7 @@ const Nav_Bar = ({
           <div className={`flex items-center gap-[35.6px]`}>
             <Link href="/">
               {/* <Logo_Wrapper indicator={`${scroll ? "black" : logoColor!}`} /> */}
-              Wymnet
+              <Image src={Logo} width={50} height={50} alt="" />
             </Link>
             {/* <div className="flex items-center gap-[16.69px]">
               <Link

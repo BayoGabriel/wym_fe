@@ -17,8 +17,10 @@ import Four from "./6.webp";
 import Five from "./5.webp";
 import HomeHeroAtm from "./HomeHeroAtm.webp";
 import Auth from "./auth.webp";
+import Logo from "./logo.png"
 
 export {
+  Logo,
   Auth,
   Home_Hero_Image,
   WomanYello,
