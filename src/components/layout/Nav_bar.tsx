@@ -71,29 +71,8 @@ const Nav_Bar = ({
         >
           <div className={`flex items-center gap-[35.6px]`}>
             <Link href="/">
-              {/* <Logo_Wrapper indicator={`${scroll ? "black" : logoColor!}`} /> */}
               <Image src={Logo} width={50} height={50} alt="" />
             </Link>
-            {/* <div className="flex items-center gap-[16.69px]">
-              <Link
-              to={"/"}
-                className={`${
-                  personalStyle ? personalStyle : "text-[#0B40EE] bg-[#DCFFC7]"
-                } hidden font-[600] text-base leading-[24px] lg:block w-fit px-[14px] py-[0.3rem] rounded-[20px]`}
-              >
-                <p className="font-[600] font-Inter">Personal</p>
-              </Link>
-              <div>
-                <a
-                  href=" "
-                  target="_blank"
-                  className={`font-[600] font-Inter hidden lg:block px-[10px] py-[0.3rem] leading-[26.7px] text-base rounded-[20px]
-                  ${scroll ? "text-[#101828]" : linkColor!}`}
-                >
-                  Business
-                </a>
-              </div>
-            </div> */}
           </div>
 
           <NavList
@@ -110,8 +89,8 @@ const Nav_Bar = ({
           <Link
             href="/auth/login"
             className={`${
-              getStartedBtn && !scroll ? getStartedBtn : "bg-black text-white"
-            } hidden lg:block text-sm font-medium px-6 py-[20px] rounded-[4px]`}
+              getStartedBtn && !scroll ? getStartedBtn : "border-black border"
+            } hidden lg:block text-sm font-medium px-4 py-2 rounded-sm`}
           >
             Get started — It's free
           </Link>

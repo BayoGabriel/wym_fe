@@ -15,6 +15,7 @@ const Cable_Hero = () => {
         container: "xmd:pt-10 text-black",
         btn: "text-white bg-[#0a40ed] w-[190px] max-md:px-10 py-[17px] rounded-[4px] font-[300] text-center",
       }}
+      isabsolute
     />
   );
 };

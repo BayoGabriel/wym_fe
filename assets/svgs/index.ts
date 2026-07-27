@@ -18,7 +18,7 @@ import Savings2 from "./Savings2";
 import SendMoney from "./SendMoney";
 import Credit from "./Credit";
 import Protection from "./Protection";
-import Logo from "./bravoo.svg";
+// import Logo from "./bravoo.svg";
 import Credit_Card_Hero_Gradient from "./Credit_Card_Hero_Gradient";
 import Make_Payment_Icon from "./Make_Payment_Icon";
 import Make_Payment_Icon_Two from "./Make_Payment_Icon_Two";
@@ -145,7 +145,7 @@ export {
   Make_Payment_Icon_Two,
   Make_Payment_Icon_Three,
   Credit,
-  Logo,
+  // Logo,
   Credit_Card_Hero_Gradient,
   SendMoney,
   Protection,

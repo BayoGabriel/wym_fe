@@ -33,7 +33,7 @@ const Hero = ({
 }: Hero_Props) => {
   return (
     <div
-      className={`w-full containerclass flex flex-col xmd:flex-row items-center justify-between gap-8 ${styles.root ?? ""}`}
+      className={`w-full containerclass flex max-lg:flex-col items-center justify-between gap-8 ${styles.root ?? ""}`}
     >
       <div
         className={`w-full xmd:w-[60%] flex flex-col gap-4 xmd:gap-8 pb-4 ${styles.container}`}
@@ -54,7 +54,7 @@ const Hero = ({
           {subText}
         </p>
         <Link
-          href={"/download"}
+          href={"/auth/login"}
           className={`py-[10px] px-8 rounded-[4px] xmd: font-semibold xmd:font-bold w-fit max-md:px-4 max-md:py-2 ${styles.btn}`}
         >
           {btnText}
