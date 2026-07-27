@@ -7,12 +7,19 @@ import First_Section from "@/features/home/components/First_Section";
 import Flex_Sections from "@/features/home/components/Flex_Sections";
 import GetInTouch from "@/components/widget_components/get_in_touch";
 import Footer from "@/components/layout_components/footer";
-import Nav_Bar from "@/components/layout_components/nav";
+import Nav_Bar from "@/src/components/layout/Nav_bar";
+// import Nav_Bar from "@/components/layout_components/nav";
 
 const Telecom_Services_Page = () => {
   return (
     <Fragment>
-      <Nav_Bar />
+      <Nav_Bar
+        bgColor="bg-[#CDF2FC]"
+        logoColor="white"
+        linkColor="text-[#091A30]"
+        linkDColor="text-[#091A30]"
+        getStartedBtn="bg-white text-[#091A30]"
+      />
       <Hero_Layout sectionClassName="bg-[#CDF2FC]">
         <Home_Hero />
       </Hero_Layout>

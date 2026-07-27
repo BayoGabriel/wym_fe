@@ -6,7 +6,7 @@ const ROUTES = {
   AIRTIME: "/services/telecom",
   ABOUT: "/about",
   CONTACT: "/contact",
-  POWER: "/electricity-payment",
+  POWER: "/services/electricity-payment",
   NOT_FOUND: "*",
   CABLE: "/services/cable",
   TRANSFER: "/services/bank-transfer",
@@ -15,10 +15,9 @@ const ROUTES = {
   TERMS: "/terms",
   AML: "/AML",
   FAQ: "/faq",
-  GETBOLD: "/download",
+  GETBOLD: "/auth/login",
   MAKE_PAYMENT: "/scan-and-pay",
   GLOBALTRANSFER: "/global-transfer",
-  VIRTUALBANKACCOUNT: "/Us-bank-account",
 };
 
 export default ROUTES;

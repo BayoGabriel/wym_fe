@@ -1,3 +1,4 @@
+"use client"
 import { Fragment, useEffect, useRef, useState } from "react";
 import { IoMdMenu } from "react-icons/io";
 import NavList from "../NavList";

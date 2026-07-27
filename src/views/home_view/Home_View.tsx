@@ -9,8 +9,6 @@ import Easy_Bill from "./home_view_components/Easy_Bill";
 import Home_Hero from "./Home_Hero";
 import Nav_Bar from "../../components/layout/Nav_bar";
 import Make_Payment from "../../components/Make_Payment";
-import { appName } from "@/data/constants/app_name";
-import Link from "next/link";
 
 const Home_View = () => {
   return (
@@ -20,7 +18,7 @@ const Home_View = () => {
         logoColor="white"
         linkColor="text-white"
         linkDColor="text-white"
-        getStartedBtn="bg-white text-[#091A30]"
+        getStartedBtn="bg-white text-[#0B40EE]"
       />
       <Hero_Layout>
         <Home_Hero />

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { HELP, PAYMENT, REWARD } from "../constants/data/Nav_Data";
-import { BlueLogo, MobileBlue } from "../assets";
+// import { BlueLogo, MobileBlue } from "../assets";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import Link from "next/link";
@@ -101,7 +101,7 @@ const MobileNav = ({
         <div className="flex items-center justify-between px-4 pt-4">
           <div className="flex items-center">
             <Link href={"/"}>
-              <Image src={BlueLogo} alt="logo" className="h-[60px] w-auto" />
+              {/* <Image src={BlueLogo} alt="logo" className="h-[60px] w-auto" /> */}Wymnet
             </Link>
           </div>
           <button
