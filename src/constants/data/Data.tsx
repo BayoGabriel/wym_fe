@@ -249,141 +249,141 @@ export const LIST = [
       },
     ],
   },
-  {
-    title: "VIRTUAL CARD",
-    button: [
-      {
-        head: "What is a virtual card?",
-        subList: [
-          {
-            text: `${appName} virtual cards are debit cards that allow you to make transactions online without using a physical card. With a virtual card linked to your ${appName} wallet, you can easily pay for any online transactions.`,
-          },
-        ],
-      },
-      {
-        head: "How is a virtual card different from an ordinary debit/credit card?",
-        subList: [
-          {
-            text: "Virtual cards do the same thing as regular debit cards, and they work in the same way. However, unlike regular debit cards, virtual cards are not issued physically. ",
-          },
-        ],
-      },
-      {
-        head: "How does a virtual card work?",
-        subList: [
-          {
-            text: "Virtual cards work in the same way that regular debit/credit cards work. While there is usually no physical card, they will have a unique card number, expiry date, and secret number just like regular debit/credit cards.",
-          },
-        ],
-      },
-      {
-        head: "How much does it cost to get a virtual card?",
-        subList: [
-          {
-            text: `${appName} virtual cards are issued free of charge.`,
-          },
-        ],
-      },
-      {
-        head: "Are virtual cards secure?",
-        subList: [
-          {
-            text: `${appName} virtual cards are highly secure. For added safety users must also ensure to only shop on reputable websites and to be vigilant at all times. `,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    title: "SAVINGS",
-    button: [
-      {
-        head: `How does ${appName} app help me save?`,
-        subList: [
-          {
-            text: `${appName} provides a savings platform that allows you deposit you where you can deposit your funds and earn interest over time. You can also lock away your funds a specific period, encouraging disciplined saving habits.`,
-          },
-        ],
-      },
-      {
-        head: `How Do I Start Saving on ${appName}`,
-        subList: [
-          {
-            text: `Saving on ${appName} is easy. Simply download the app, create an account, and fund your ${appName} wallet. You can then click on the Savings tab on your dashboard to fund your ${appName} Super Savers wallet.`,
-          },
-        ],
-      },
-      {
-        head: `Are there any charges for savings?`,
-        subList: [
-          {
-            text: `Saving with ${appName} is free! In fact, we pay you a generous interest of up to 15% per annum when you save with our Super Savers wallet.`,
-          },
-        ],
-      },
-      {
-        head: `What interest rate does ${appName} app offer?`,
-        subList: [
-          {
-            text: `${appName} offer interest rate of up to s an attractive15% on savings, which is significantly higher than interest on savings with traditional bank savings accounts.`,
-          },
-        ],
-      },
-      {
-        head: `Can I access my savings anytime with ${appName} app? `,
-        subList: [
-          {
-            text: `While ${appName} app offers the option to lock away funds for a period of time, it also provides flexibility for users to access their savings when needed, subject to any applicable terms and conditions.`,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    title: "LOANS",
-    button: [
-      {
-        head: "Am I eligible for a loan? ",
-        subList: [
-          {
-            text: `${appName} evaluates eligibility based on your credit profile. We take into consideration your usage of the app, savings and any other loans you may have.`,
-          },
-        ],
-      },
-      {
-        head: "Do I need collateral to qualify for a loan?",
-        subList: [
-          {
-            text: "No. We rely on your credit profile to make eligibility decisions. Applicants who are approved for loans will not require any collateral.",
-          },
-        ],
-      },
-      {
-        head: `What is the interest rate on loans from ${appName}?`,
-        subList: [
-          {
-            text: `Interest rates vary and largely depend on your credit profile but they are consistently lower than the market average. The more you take loans and repay them, the lower the interest rate we can offer you. `,
-          },
-        ],
-      },
-      {
-        head: `What customer support options are available if I need assistance with my loan? `,
-        subList: [
-          {
-            text: `${appName} offers 24/7 customer service, ensuring that support is readily available whenever you need it.`,
-          },
-        ],
-      },
-      {
-        head: `How can I apply for a small business loan through ${appName}?`,
-        subList: [
-          {
-            text: `To apply for a loan, download the ${appName} app from the Google Play Store or IOS Store, create an account, and get verified. You can then apply for a loan by clicking the Loans button on your dashboard.`,
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   title: "VIRTUAL CARD",
+  //   button: [
+  //     {
+  //       head: "What is a virtual card?",
+  //       subList: [
+  //         {
+  //           text: `${appName} virtual cards are debit cards that allow you to make transactions online without using a physical card. With a virtual card linked to your ${appName} wallet, you can easily pay for any online transactions.`,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: "How is a virtual card different from an ordinary debit/credit card?",
+  //       subList: [
+  //         {
+  //           text: "Virtual cards do the same thing as regular debit cards, and they work in the same way. However, unlike regular debit cards, virtual cards are not issued physically. ",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: "How does a virtual card work?",
+  //       subList: [
+  //         {
+  //           text: "Virtual cards work in the same way that regular debit/credit cards work. While there is usually no physical card, they will have a unique card number, expiry date, and secret number just like regular debit/credit cards.",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: "How much does it cost to get a virtual card?",
+  //       subList: [
+  //         {
+  //           text: `${appName} virtual cards are issued free of charge.`,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: "Are virtual cards secure?",
+  //       subList: [
+  //         {
+  //           text: `${appName} virtual cards are highly secure. For added safety users must also ensure to only shop on reputable websites and to be vigilant at all times. `,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "SAVINGS",
+  //   button: [
+  //     {
+  //       head: `How does ${appName} app help me save?`,
+  //       subList: [
+  //         {
+  //           text: `${appName} provides a savings platform that allows you deposit you where you can deposit your funds and earn interest over time. You can also lock away your funds a specific period, encouraging disciplined saving habits.`,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: `How Do I Start Saving on ${appName}`,
+  //       subList: [
+  //         {
+  //           text: `Saving on ${appName} is easy. Simply download the app, create an account, and fund your ${appName} wallet. You can then click on the Savings tab on your dashboard to fund your ${appName} Super Savers wallet.`,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: `Are there any charges for savings?`,
+  //       subList: [
+  //         {
+  //           text: `Saving with ${appName} is free! In fact, we pay you a generous interest of up to 15% per annum when you save with our Super Savers wallet.`,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: `What interest rate does ${appName} app offer?`,
+  //       subList: [
+  //         {
+  //           text: `${appName} offer interest rate of up to s an attractive15% on savings, which is significantly higher than interest on savings with traditional bank savings accounts.`,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: `Can I access my savings anytime with ${appName} app? `,
+  //       subList: [
+  //         {
+  //           text: `While ${appName} app offers the option to lock away funds for a period of time, it also provides flexibility for users to access their savings when needed, subject to any applicable terms and conditions.`,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
+  // {
+  //   title: "LOANS",
+  //   button: [
+  //     {
+  //       head: "Am I eligible for a loan? ",
+  //       subList: [
+  //         {
+  //           text: `${appName} evaluates eligibility based on your credit profile. We take into consideration your usage of the app, savings and any other loans you may have.`,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: "Do I need collateral to qualify for a loan?",
+  //       subList: [
+  //         {
+  //           text: "No. We rely on your credit profile to make eligibility decisions. Applicants who are approved for loans will not require any collateral.",
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: `What is the interest rate on loans from ${appName}?`,
+  //       subList: [
+  //         {
+  //           text: `Interest rates vary and largely depend on your credit profile but they are consistently lower than the market average. The more you take loans and repay them, the lower the interest rate we can offer you. `,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: `What customer support options are available if I need assistance with my loan? `,
+  //       subList: [
+  //         {
+  //           text: `${appName} offers 24/7 customer service, ensuring that support is readily available whenever you need it.`,
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       head: `How can I apply for a small business loan through ${appName}?`,
+  //       subList: [
+  //         {
+  //           text: `To apply for a loan, download the ${appName} app from the Google Play Store or IOS Store, create an account, and get verified. You can then apply for a loan by clicking the Loans button on your dashboard.`,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     title: `REFER AND EARN`,
     button: [
