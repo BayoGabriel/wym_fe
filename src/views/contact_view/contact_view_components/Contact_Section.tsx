@@ -11,7 +11,7 @@ const Contact_Section = () => {
               Contact us
             </h1>
             <p className="text-[18px] font-[400] leading-[30px] text-black">
-              While our banking services are seamlessly integrated into our app
+              While our services are seamlessly integrated into our app
               for your convenience, we&apos;re always here to support you. If you
               require assistance or have any questions, don&apos;t hesitate to
               reach out. Your satisfaction is our priority.
@@ -47,10 +47,10 @@ const Contact_Section = () => {
               <div className="flex gap-2 max-md:gap-1 items-center max-md:flex-col">
                 <span>Call: </span>
                 <a
-                  href="tel:+234800000000001"
+                  href="tel:+2347075949707"
                   className="xmd:bg-[#F9F5FF] rounded-[16px] px-3 py-2 text-[16px] max-sm:text-[12px] text-[#006FFF] my-6"
                 >
-                  <span className="font-[600]">+234800000000001</span>
+                  <span className="font-[600]">+2347075949707</span>
                 </a>
               </div>
             </div>
