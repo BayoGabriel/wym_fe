@@ -35,6 +35,239 @@ const AIWorkflowAutomationPage = () => {
   const [registeredParticipant, setRegisteredParticipant] =
     useState<FormState | null>(null);
   const [registrationComplete, setRegistrationComplete] = useState(false);
+  const [activeStage, setActiveStage] = useState<
+    "beginner" | "intermediate" | "advanced"
+  >("beginner");
+
+  const beginnerModules = [
+    {
+      title: "Module 1 — Introduction to Cybersecurity",
+      items: [
+        "Overview of cybersecurity",
+        "Understanding today's cyber threat landscape",
+        "Importance of cybersecurity across industries",
+      ],
+    },
+    {
+      title: "Module 2 — Passwords & Authentication",
+      items: [
+        "Strong password creation",
+        "Multi-factor Authentication (MFA)",
+        "Password managers",
+        "Password best practices",
+      ],
+    },
+    {
+      title: "Module 3 — Cybersecurity Awareness",
+      items: [
+        "Digital hygiene",
+        "Safe online practices",
+        "Identifying risky online behavior",
+      ],
+    },
+    {
+      title: "Module 4 — Phishing & Email Security",
+      items: [
+        "Understanding phishing attacks",
+        "Real-world phishing examples",
+        "Reporting phishing attempts",
+      ],
+    },
+    {
+      title: "Module 5 — Malware",
+      items: [
+        "Viruses",
+        "Ransomware",
+        "Spyware",
+        "Malware prevention techniques",
+      ],
+    },
+    {
+      title: "Module 6 — Social Engineering",
+      items: [
+        "Understanding social engineering",
+        "Psychological manipulation techniques",
+        "Real-world case studies",
+      ],
+    },
+    {
+      title: "Module 7 — Patch Management",
+      items: [
+        "Importance of system updates",
+        "Vulnerability lifecycle",
+        "Patch management tools",
+      ],
+    },
+    {
+      title: "Module 8 — Firewalls & Antivirus",
+      items: [
+        "Host-based firewalls",
+        "Network firewalls",
+        "Antivirus software",
+        "Anti-malware protection",
+        "Basic configuration",
+      ],
+    },
+    {
+      title: "Module 9 — Data Backup & Recovery",
+      items: [
+        "Full backups",
+        "Incremental backups",
+        "Differential backups",
+        "Cloud vs local backups",
+        "Business continuity basics",
+      ],
+    },
+  ];
+
+  const intermediateModules = [
+    {
+      title: "Module 1 — Network Security Fundamentals",
+      items: [
+        "OSI Model",
+        "TCP/IP",
+        "Ports and protocols",
+        "Network segmentation",
+        "Network hardening",
+      ],
+    },
+    {
+      title: "Module 2 — Encryption & Cryptography",
+      items: [
+        "Symmetric encryption",
+        "Asymmetric encryption",
+        "SSL/TLS",
+        "Hashing",
+        "Digital signatures",
+      ],
+    },
+    {
+      title: "Module 3 — Incident Response & Handling",
+      items: [
+        "Incident response lifecycle",
+        "Response planning",
+        "Team roles during security breaches",
+      ],
+    },
+    {
+      title: "Module 4 — Compliance & Regulations",
+      items: [
+        "GDPR",
+        "HIPAA",
+        "NIST",
+        "ISO 27001",
+        "Legal & ethical responsibilities",
+      ],
+    },
+    {
+      title: "Module 5 — Security Auditing",
+      items: [
+        "Internal audits",
+        "External audits",
+        "Nessus",
+        "OpenVAS",
+        "Security assessment techniques",
+      ],
+    },
+    {
+      title: "Module 6 — Secure Coding",
+      items: [
+        "OWASP Top 10",
+        "Input validation",
+        "Output encoding",
+        "Secure Software Development Lifecycle (SSDLC)",
+      ],
+    },
+  ];
+
+  const specializationTracks = [
+    {
+      title: "Ethical Hacking & Penetration Testing",
+      items: [
+        "Penetration testing methodology",
+        "Kali Linux",
+        "Metasploit",
+        "Burp Suite",
+        "Attack vectors",
+        "Reporting",
+      ],
+    },
+    {
+      title: "Security Operations Centre (SOC) Analyst",
+      items: [
+        "SOC operations",
+        "SIEM",
+        "Splunk",
+        "ELK",
+        "Alert monitoring & log correlation",
+        "Incident escalation",
+      ],
+    },
+    {
+      title: "Digital Forensics & Incident Investigation",
+      items: [
+        "Evidence collection & chain of custody",
+        "Disk forensics",
+        "Memory forensics",
+        "Windows & Linux analysis",
+        "Autopsy",
+        "FTK Imager",
+      ],
+    },
+    {
+      title: "Threat Intelligence & Threat Hunting",
+      items: [
+        "Threat actor profiling",
+        "Indicators of Compromise (IOC)",
+        "MITRE ATT&CK",
+        "Tactics, Techniques & Procedures (TTPs)",
+        "Threat hunting",
+        "Open Source Intelligence (OSINT)",
+      ],
+    },
+    {
+      title: "Cloud Security",
+      items: [
+        "Shared responsibility model",
+        "Identity & Access Management",
+        "Cloud data protection",
+        "Common cloud vulnerabilities",
+        "Cloud security testing",
+      ],
+    },
+    {
+      title: "IoT Security",
+      items: [
+        "IoT threat landscape",
+        "Embedded systems security",
+        "Firmware analysis",
+        "Privacy risks",
+        "Risk mitigation",
+      ],
+    },
+    {
+      title: "Governance, Risk & Compliance (GRC)",
+      items: [
+        "COBIT",
+        "ISO 27001",
+        "NIST CSF",
+        "Risk assessment",
+        "Policy development",
+        "Business continuity & disaster recovery",
+      ],
+    },
+    {
+      title: "Information & Network Security Analyst",
+      items: [
+        "Endpoint security",
+        "Network defense",
+        "Firewall management",
+        "IDS/IPS tuning",
+        "Vulnerability scanning & patch management",
+        "Security operations",
+      ],
+    },
+  ];
 
   const validate = (): boolean => {
     const nextErrors: FormErrors = {};
@@ -135,20 +368,19 @@ const AIWorkflowAutomationPage = () => {
         <div className="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 px-4 md:flex-row md:items-center md:px-6 lg:px-8">
           <div className="flex-1 space-y-6">
             <p className="inline-flex items-center rounded-full bg-slate-900/60 px-3 py-1 text-xs font-medium text-emerald-300 ring-1 ring-emerald-400/40">
-              Wymnet Training Program · 5 – 12 September · Abuja · Hybrid
+              Wymnet Cybersecurity Program · Abuja · Hybrid Learning
             </p>
             <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              Learn{" "}
+              Build a Career in{" "}
               <span className="bg-gradient-to-r from-emerald-300 via-sky-300 to-indigo-300 bg-clip-text text-transparent">
-                AI Workflow Automation
-              </span>{" "}
-              from Industry Professionals
+                Cybersecurity
+              </span>
             </h1>
             <p className="max-w-xl text-sm leading-relaxed text-slate-300 sm:text-base">
-              Master how to design intelligent workflows, apply modern AI tools
-              like ChatGPT and AI agents, and automate real business processes.
-              Build production-ready systems that increase productivity, reduce
-              manual work, and create leverage in any organization.
+              A comprehensive cybersecurity program that takes you from
+              foundational security concepts to professional operations, secure
+              software development, compliance, incident response and advanced
+              specialization tracks.
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
@@ -159,42 +391,43 @@ const AIWorkflowAutomationPage = () => {
               </button>
               <button
                 onClick={scrollToDetails}
-                className="rounded-full border border-slate-700 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-900/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                className=" rounded-full border border-slate-700 px-6 py-3 text-sm font-semibold text-slate-100 transition hover:border-slate-500 hover:bg-slate-900/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 "
               >
                 View Program Details
               </button>
             </div>
-            <div className="mt-4 grid gap-3 text-xs text-slate-300 sm:grid-cols-3 sm:text-sm">
+            <div className=" mt-4 grid gap-3 text-xs text-slate-300 sm:grid-cols-3 sm:text-sm ">
               <div>
-                <p className="font-medium text-slate-100">Organizer</p>
-                <p>Wymnet</p>
+                <p className=" font-medium text-slate-100 "> Organizer </p>
+                <p> Wymnet </p>
               </div>
               <div>
-                <p className="font-medium text-slate-100">Mode</p>
+                <p className=" font-medium text-slate-100 "> Mode </p>
                 <p>
                   Hybrid · Physical (Novare Mall, Wuse, Abuja) + Live Online
                 </p>
               </div>
               <div>
-                <p className="font-medium text-slate-100">Investment</p>
-                <p className="text-emerald-300 font-semibold">₦300,000</p>
+                <p className=" font-medium text-slate-100 "> Investment </p>
+                <p className=" text-emerald-300 font-semibold "> ₦50,000 </p>
               </div>
             </div>
           </div>
 
-          <div className="flex-1">
-            <div className="mx-auto max-w-md rounded-3xl bg-slate-900/70 p-6 shadow-2xl shadow-emerald-500/20 ring-1 ring-slate-800 backdrop-blur">
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-emerald-300">
-                AI WORKFLOW AUTOMATION
+          <div className=" flex-1 ">
+            <div className=" mx-auto max-w-md rounded-3xl bg-slate-900/70 p-6 shadow-2xl shadow-emerald-500/20 ring-1 ring-slate-800 backdrop-blur ">
+              <p className=" text-xs font-medium uppercase tracking-[0.2em] text-emerald-300 ">
+                CYBERSECURITY PROGRAM
               </p>
-              <p className="mt-2 text-sm text-slate-200">
-                7-day intensive, hybrid training designed for professionals,
-                founders and teams who want to build real AI automation systems.
+              <p className=" mt-2 text-sm text-slate-200 ">
+                A structured learning journey for beginners and professionals
+                who want to build real cybersecurity skills and protect modern
+                digital systems.
               </p>
-              <div className="mt-6 space-y-3 text-xs text-slate-300">
-                <div className="flex items-center justify-between">
-                  <span>Date</span>
-                  <span className="font-medium text-slate-100">
+              <div className=" mt-6 space-y-3 text-xs text-slate-300 ">
+                <div className=" flex items-center justify-between ">
+                  <span> Date </span>
+                  <span className=" font-medium text-slate-100 ">
                     5 – 12 September
                   </span>
                 </div>
@@ -229,30 +462,30 @@ const AIWorkflowAutomationPage = () => {
         </div>
       </section>
 
-      {/* Why Attend */}
+      {/* Course Overview / Why Attend */}
       <section className="bg-slate-950/80 py-16" id="program-details">
         <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8">
           <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-                Why Attend this Program?
+                Why Learn Cybersecurity with Wymnet?
               </h2>
               <p className="mt-2 max-w-2xl text-sm text-slate-300">
-                Go beyond theory. You&apos;ll work through real automation
-                challenges with guidance from practitioners who build AI systems
-                every day.
+                This program combines fundamentals, technical security
+                operations and advanced specializations so you can progress from
+                beginner to professional-level cybersecurity practitioner.
               </p>
             </div>
           </div>
 
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {[
-              "Practical, hands-on training",
-              "Hybrid learning experience",
-              "International certificate",
-              "Industry instructors",
-              "Real-world AI automation projects",
-              "High-value networking opportunities",
+              "Structured beginner-to-advanced learning path",
+              "Hands-on labs with real security tools",
+              "Career-focused specialization tracks",
+              "Industry-aligned curriculum (NIST, ISO 27001, OWASP)",
+              "Guidance from experienced security practitioners",
+              "Certificate of completion from Wymnet",
             ].map((item) => (
               <div
                 key={item}
@@ -270,48 +503,145 @@ const AIWorkflowAutomationPage = () => {
         </div>
       </section>
 
-      {/* What You&apos;ll Learn */}
+      {/* Learning Journey */}
       <section className="bg-slate-950 py-16">
         <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8">
           <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">
-                What You&apos;ll Learn
+                Your Cybersecurity Learning Journey
               </h2>
               <p className="mt-2 max-w-2xl text-sm text-slate-300">
-                A curated curriculum focused on real-world AI automation,
-                productivity systems and no-code tooling so you can ship
-                immediately.
+                Follow a clear path from cybersecurity foundations to
+                professional skills and advanced career tracks.
               </p>
             </div>
           </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-3">
+          <div className="mt-6 inline-flex rounded-full bg-slate-900/70 p-1 text-xs">
             {[
-              "AI Workflow Design",
-              "ChatGPT for Business",
-              "Automation with AI",
-              "AI Agents",
-              "Prompt Engineering",
-              "Business Process Automation",
-              "Productivity Systems",
-              "AI Tools Integration",
-              "No-code Automation",
-              "Building AI Solutions",
-            ].map((topic) => (
-              <div
-                key={topic}
-                className="rounded-2xl bg-slate-950/80 p-[1px] ring-1 ring-slate-800/80"
+              { id: "beginner", label: "Beginner Foundation" },
+              { id: "intermediate", label: "Intermediate Skills" },
+              { id: "advanced", label: "Advanced Specializations" },
+            ].map((stage) => (
+              <button
+                key={stage.id}
+                type="button"
+                onClick={() =>
+                  setActiveStage(
+                    stage.id as "beginner" | "intermediate" | "advanced",
+                  )
+                }
+                className={`rounded-full px-4 py-1.5 font-medium transition ${
+                  activeStage === stage.id
+                    ? "bg-emerald-400 text-slate-950"
+                    : "text-slate-200 hover:text-white"
+                }`}
               >
-                <div className="flex h-full flex-col rounded-2xl bg-gradient-to-b from-slate-950 to-slate-950/60 p-5">
-                  <div className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-500/10 text-sky-300 ring-1 ring-sky-500/30">
-                    <span className="text-sm">⚡</span>
-                  </div>
-                  <p className="text-sm font-medium text-slate-50">{topic}</p>
-                </div>
-              </div>
+                {stage.label}
+              </button>
             ))}
           </div>
+
+          {/* Beginner Modules */}
+          {activeStage === "beginner" && (
+            <div className="mt-8 space-y-4 text-sm text-slate-200">
+              <p className="text-xs uppercase tracking-[0.2em] text-emerald-300">
+                Beginner Level · Build Your Cybersecurity Foundation
+              </p>
+              <p className="max-w-3xl text-sm text-slate-300">
+                Learn the essential cybersecurity concepts every professional
+                should know before progressing into technical security
+                disciplines.
+              </p>
+              <div className="mt-4 grid gap-5 md:grid-cols-2">
+                {beginnerModules.map((module) => (
+                  <div
+                    key={module.title}
+                    className="rounded-2xl bg-slate-950/80 p-5 ring-1 ring-slate-800"
+                  >
+                    <h3 className="text-sm font-semibold text-slate-50">
+                      {module.title}
+                    </h3>
+                    <ul className="mt-3 space-y-1.5 text-xs text-slate-300">
+                      {module.items.map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span className="mt-[2px] text-emerald-300">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Intermediate Modules */}
+          {activeStage === "intermediate" && (
+            <div className="mt-8 space-y-4 text-sm text-slate-200">
+              <p className="text-xs uppercase tracking-[0.2em] text-emerald-300">
+                Intermediate Level · Develop Professional Cybersecurity Skills
+              </p>
+              <p className="max-w-3xl text-sm text-slate-300">
+                Move beyond awareness into technical cybersecurity practices
+                used in real organizations.
+              </p>
+              <div className="mt-4 grid gap-5 md:grid-cols-2">
+                {intermediateModules.map((module) => (
+                  <div
+                    key={module.title}
+                    className="rounded-2xl bg-slate-950/80 p-5 ring-1 ring-slate-800"
+                  >
+                    <h3 className="text-sm font-semibold text-slate-50">
+                      {module.title}
+                    </h3>
+                    <ul className="mt-3 space-y-1.5 text-xs text-slate-300">
+                      {module.items.map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span className="mt-[2px] text-emerald-300">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Advanced Specializations */}
+          {activeStage === "advanced" && (
+            <div className="mt-8 space-y-4 text-sm text-slate-200">
+              <p className="text-xs uppercase tracking-[0.2em] text-emerald-300">
+                Advanced Level · Choose Your Cybersecurity Career Path
+              </p>
+              <p className="max-w-3xl text-sm text-slate-300">
+                Specialize in one or more professional tracks and build
+                expertise in the areas that match your career goals.
+              </p>
+              <div className="mt-4 grid gap-5 md:grid-cols-2">
+                {specializationTracks.map((track) => (
+                  <div
+                    key={track.title}
+                    className="rounded-2xl bg-slate-950/80 p-5 ring-1 ring-slate-800"
+                  >
+                    <h3 className="text-sm font-semibold text-slate-50">
+                      {track.title}
+                    </h3>
+                    <ul className="mt-3 space-y-1.5 text-xs text-slate-300">
+                      {track.items.map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span className="mt-[2px] text-emerald-300">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -367,7 +697,7 @@ const AIWorkflowAutomationPage = () => {
                 <div className="relative p-6">
                   <div className="pointer-events-none absolute -right-10 -top-16 h-40 w-40 rounded-full bg-emerald-500/15 blur-3xl" />
                   <p className="text-xs font-medium uppercase tracking-[0.2em] text-emerald-300">
-                    AI WORKFLOW AUTOMATION
+                    CYBERSECURITY PROGRAM
                   </p>
                   <p className="mt-3 text-xs text-slate-300">Price</p>
                   <p className="text-3xl font-semibold text-emerald-300">
