@@ -14,6 +14,7 @@ interface Navbar_Props {
   personalStyle?: string;
   getStartedBtn?: string;
   iconColor?: string;
+  disableScrollStyleChange?: boolean;
 }
 
 const Nav_Bar = ({
@@ -24,6 +25,7 @@ const Nav_Bar = ({
   personalStyle,
   getStartedBtn,
   iconColor,
+  disableScrollStyleChange = false,
 }: Navbar_Props) => {
   const [navIndicator, setNavIndicator] = useState("");
   const [scroll, setScroll] = useState(false);
@@ -62,10 +64,11 @@ const Nav_Bar = ({
   return (
     <Fragment>
       <header
-        className={`${scroll ? "bg-white" : bgColor} py-4 sticky z-[150] top-0`}
+        className={`${
+          disableScrollStyleChange ? bgColor : scroll ? "bg-white" : bgColor
+        } py-4 sticky z-[150] top-0`}
         style={{ paddingTop: 20 }}
       >
-        {/* nav */}
         <nav
           className={`w-[95%] containerclass max-w-screen-2lg 3xl:max-w-xlg mx-auto flex justify-between items-center`}
         >
@@ -89,7 +92,11 @@ const Nav_Bar = ({
           <Link
             href="/auth/login"
             className={`${
-              getStartedBtn && !scroll ? getStartedBtn : "border-black border"
+              disableScrollStyleChange
+                ? (getStartedBtn ?? "border-black border")
+                : getStartedBtn && !scroll
+                  ? getStartedBtn
+                  : "border-black border"
             } hidden lg:block text-sm font-medium px-4 py-2 rounded-sm`}
           >
             Get started — It's free
@@ -99,7 +106,11 @@ const Nav_Bar = ({
             {IoMdMenu({
               size: 24,
               className: `${
-                scroll ? "text-[#101828]" : iconColor ? iconColor : "text-white"
+                disableScrollStyleChange
+                  ? (iconColor ?? "text-white")
+                  : scroll
+                    ? "text-[#101828]"
+                    : (iconColor ?? "text-white")
               } cursor-pointer`,
             })}
           </button>
