@@ -3,7 +3,7 @@ import { AboutImage, AboutImage2, AboutImage3 } from "@/src/assets";
 
 const Core_Values = () => {
   return (
-    <div className="w-[95%] max-w-screen-2lg 3xl:max-w-xlg mx-auto mt-10">
+    <div className="w-[95%] max-w-screen-2lg 3xl:max-w-xlg mx-auto my-10">
       <p className="font-[500] font-aeonik lg:text-[60px] text-blackb text-[30px] xl:w-[100%]  mx-auto  py-[24px] flex lg:leading-[72px] xl:pl-[0px] pl-[24px]">
         Our Core Values
       </p>
