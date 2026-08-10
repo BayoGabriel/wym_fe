@@ -7,6 +7,8 @@ import { Metadata } from 'next'
 import ArticleHeader from '@/src/components/blog/ArticleHeader'
 import Image from 'next/image'
 import { urlFor } from '@/lib/sanity/image'
+import Nav_Bar from '@/src/components/layout/Nav_bar'
+import Footer from '@/src/components/layout/Footer'
 
 export const revalidate = 60
 
@@ -47,32 +49,36 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
   const related = await sanityClient.fetch<Post[]>(RELATED_POSTS, { slug: post.slug.current, categoryId: post.category?._id, tags: post.tags || [] })
 
   return (
-    <article className="px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mx-auto max-w-5xl">
-        <ArticleHeader post={post} />
-      </div>
-
-      {post.mainImage && (
-        <div className="mt-8 mx-auto max-w-[1400px]">
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-muted">
-            <Image
-              src={urlFor(post.mainImage).width(1600).height(900).quality(85).url()}
-              alt={post.imageAlt || post.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 1024px) 100vw, 1200px"
-            />
-          </div>
+    <>
+      <Nav_Bar bgColor="bg-transparent" linkColor="text-[#101828]" linkDColor="text-[#101828]" getStartedBtn="border-black border" iconColor="text-[#101828]" disableScrollStyleChange />
+      <article className="px-4 sm:px-6 lg:px-8 py-10">
+        <div className="mx-auto max-w-5xl">
+          <ArticleHeader post={post} />
         </div>
-      )}
 
-      <div className="mx-auto max-w-3xl mt-10">
-        <ArticleContent post={post} />
-      </div>
+        {post.mainImage && (
+          <div className="mt-8 mx-auto max-w-[1400px]">
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-muted">
+              <Image
+                src={urlFor(post.mainImage).width(1600).height(900).quality(85).url()}
+                alt={post.imageAlt || post.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 1200px"
+              />
+            </div>
+          </div>
+        )}
 
-      <div className="mx-auto max-w-5xl mt-16">
-        <RelatedArticles posts={related} />
-      </div>
-    </article>
+        <div className="mx-auto max-w-3xl mt-10">
+          <ArticleContent post={post} />
+        </div>
+
+        <div className="mx-auto max-w-5xl mt-16">
+          <RelatedArticles posts={related} />
+        </div>
+      </article>
+      <Footer />
+    </>
   )
 }
