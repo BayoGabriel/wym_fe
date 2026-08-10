@@ -10,8 +10,9 @@ import { urlFor } from '@/lib/sanity/image'
 
 export const revalidate = 60
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await sanityClient.fetch<Post | null>(POST_BY_SLUG, { slug: params.slug })
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> | { slug: string } }): Promise<Metadata> {
+  const resolved = (params instanceof Promise) ? await params : params
+  const post = await sanityClient.fetch<Post | null>(POST_BY_SLUG, { slug: resolved.slug ?? null })
   if (!post) return {}
   const title = post.seoTitle || post.title
   const description = post.seoDescription || post.excerpt || ''
@@ -31,8 +32,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-export default async function ArticlePage({ params }: { params: { slug: string } }) {
-  const post = await sanityClient.fetch<Post | null>(POST_BY_SLUG, { slug: params.slug })
+export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> | { slug: string } }) {
+  const resolved = (params instanceof Promise) ? await params : params
+  const post = await sanityClient.fetch<Post | null>(POST_BY_SLUG, { slug: resolved.slug ?? null })
   if (!post) {
     return (
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-16">
