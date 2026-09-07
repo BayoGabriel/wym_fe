@@ -81,7 +81,7 @@ const Your_Go_To_App = ({ handleClick }: goToProps) => {
                 Dollar Cards. It's everything you need, in One App.
               </p>
               <Link
-                href="/download"
+                href="/auth/login"
                 className="bg-[#DCFFC7] text-[#071445FF] rounded-[4px] w-[220px] py-[18px] text-[16px] text-center font-[300]"
               >
                 Download App

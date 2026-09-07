@@ -51,7 +51,7 @@ const Hero = ({
           {subText}
         </p>
         <Link
-          href={"/download"}
+          href={"/auth/login"}
           className={`py-[10px] px-8 rounded-[4px] xmd: font-semibold xmd:font-bold w-fit max-md:px-4 max-md:py-2 ${styles.btn}`}
           // onClick={btnAction}
         >

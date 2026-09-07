@@ -29,7 +29,7 @@ const Cashback_View = () => {
   ];
   const router = useRouter();
   const handleClick = () => {
-    router.push("/download");
+    router.push("/auth/login");
   };
   return (
     <>

@@ -50,7 +50,7 @@ const Simple_Flex_Items = ({
           </p>
 
           {!comp ? (
-            <Link href={"/download"}>
+            <Link href={"/auth/login"}>
               <button
                 className={`text-[12px] max-md-[16px] mt-[-20px] w-[190px] ${
                   btn.btnBgColor && `rounded-[4px] p-2 px-10  bg ${btn.btnBgColor}`

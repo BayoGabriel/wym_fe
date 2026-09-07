@@ -156,7 +156,7 @@ const MobileNav = ({
         </div>
         <div className="w-full border-t-[2px] border-t-[#F9FAFB] px-4 py-8">
           <Link
-            href="/download"
+            href="/auth/login"
             className="flex items-center py-3 text-[16px] font-[600] text-gray-900"
           >
             <button className="w-full bg-[#101828] text-white text-[16px] font-[600] py-[10px] px-[18px] rounded-lg">

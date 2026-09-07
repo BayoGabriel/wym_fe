@@ -59,7 +59,7 @@ const Home_View = () => {
               </p>
 
               <Link
-                href="/download"
+                href="/auth/login"
                 className="bg-[#101828] text-white rounded-[4px] w-[220px] py-[18px] text-[16px] text-center font-[300]"
               >
                 Try {appName}

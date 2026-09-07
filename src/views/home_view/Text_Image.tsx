@@ -80,7 +80,7 @@ const Text_Image = ({
           </div>
 
           <Link
-            href={linkTo ? linkTo : "/download"}
+            href={linkTo ? linkTo : "/auth/login"}
             className={`${linkStyle} ${
               row ? "md:pt-[4rem] lg:pt-[6rem] lg:mb-[-3rem]" : ""
             } 'text-[17px] font-[400]`}

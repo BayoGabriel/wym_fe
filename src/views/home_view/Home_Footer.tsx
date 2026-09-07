@@ -16,7 +16,7 @@ const Home_Footer = () => {
             {appName} gives you full financial control.
           </p>
           <Link
-            href={"/download"}
+            href={"/auth/login"}
             className="bg-[#DCFFC7] font-[300] text-[#0F1F51FF] block w-full md:w-fit mx-auto xmd:w-fit xmd:ml-0 px-7 py-3 rounded-xl xmd:rounded-full hover:bg-[#0B40EE] hover:text-[#DCFFC7]"
           >
             Try {appName}

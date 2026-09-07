@@ -1,1 +1,1 @@
-export const appName = "Wymnet"
+export const appName = "Wymlink"

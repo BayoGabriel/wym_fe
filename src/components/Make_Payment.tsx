@@ -43,7 +43,7 @@ const Make_Payment = ({ styles }: Make_Payment_Props) => {
               Make Payments, Transfers, and more in 3 simple steps
             </h4>
             <Link
-              href={"/download"}
+              href={"/auth/login"}
               className={`${styles.btn} py-3 px-6 rounded-lg font-semibold w-fit`}
             >
               Try {appName}
