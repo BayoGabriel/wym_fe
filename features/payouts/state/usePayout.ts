@@ -61,7 +61,6 @@ export function usePayout() {
           }));
         }
       } catch (e) {
-        // swallow transient polling errors but expose once we stop
       }
     }, 4000);
   }, [stopPolling]);
