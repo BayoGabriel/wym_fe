@@ -16,6 +16,14 @@ import { IoChevronBack } from "react-icons/io5";
 import PinInput from "@/components/ui_components/pin_input";
 import { App_Modal } from "@/components/ui_components/app_modal";
 
+// Module-level cache so revisits don't refetch or flash empty selects
+let cachedElectricityPlans: Array<{
+  plan_code: string;
+  plan_name: string;
+  min_amount: number;
+  max_amount: number;
+}> | null = null;
+
 export default function ElectricityBillsPage() {
   const router = useRouter();
   const { isHydrated, isAuthenticated } = Use_Auth_Context();
@@ -30,7 +38,7 @@ export default function ElectricityBillsPage() {
       min_amount: number;
       max_amount: number;
     }>
-  >([]);
+  >(cachedElectricityPlans ?? []);
   const [selectedPlan, setSelectedPlan] = useState<string>("");
 
   const [meter, setMeter] = useState("");

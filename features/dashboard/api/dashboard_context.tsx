@@ -38,7 +38,7 @@ export const Dashboard_Context_Provider = ({ children }: children_type) => {
         setHome(result);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Something went wrong");
-        setHome(null);
+        // Keep stale `home` so revisits don't flash an empty screen
       } finally {
         setIsLoading(false);
       }

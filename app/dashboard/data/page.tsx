@@ -25,6 +25,10 @@ const NETWORKS = ["MTN", "Airtel", "9Mobile", "Glo"] as const;
 
 type Plan = { code: string; name: string; amount: number };
 
+// Module-level caches so revisits don't refetch or flash empty selects
+let cachedDataNetworks: Array<{ name?: string; code?: string }> | null = null;
+const cachedDataPlans = new Map<string, Plan[]>();
+
 export default function BuyDataPage() {
   const router = useRouter();
   const { isAuthenticated, isHydrated, authenticatedRequest, user } =
@@ -77,9 +81,12 @@ export default function BuyDataPage() {
           const code = String(value);
           return { name, code };
         });
+        cachedDataNetworks = list;
         setNetworks(list);
       } catch {
-        setNetworks(NETWORKS.map((n) => ({ name: n, code: n })));
+        const fallback = NETWORKS.map((n) => ({ name: n, code: n }));
+        cachedDataNetworks = fallback;
+        setNetworks((prev) => (prev.length ? prev : fallback));
       }
     };
     void bootstrap();
@@ -129,6 +136,7 @@ export default function BuyDataPage() {
           }
           return { code, name: display, amount };
         });
+        cachedDataPlans.set(network, mapped);
         setPlans(mapped);
       } catch (e) {
         setPlans([]);

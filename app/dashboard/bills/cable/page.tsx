@@ -17,6 +17,14 @@ import { IoChevronBack } from "react-icons/io5";
 import PinInput from "@/components/ui_components/pin_input";
 import { App_Modal } from "@/components/ui_components/app_modal";
 
+// Module-level caches so revisits don't refetch or flash empty selects
+let cachedCableProviders: Array<{ identifier: string; name: string }> | null =
+  null;
+const cachedCablePlans = new Map<
+  string,
+  Array<{ plan_code: string; amount: number; label: string }>
+>();
+
 export default function CableBillsPage() {
   const router = useRouter();
   const { isHydrated, isAuthenticated } = Use_Auth_Context();
@@ -26,7 +34,7 @@ export default function CableBillsPage() {
 
   const [providers, setProviders] = useState<
     Array<{ identifier: string; name: string }>
-  >([]);
+  >(cachedCableProviders ?? []);
   const [selectedProvider, setSelectedProvider] = useState<string>("");
 
   const [plans, setPlans] = useState<
@@ -50,7 +58,9 @@ export default function CableBillsPage() {
     const bootstrap = async () => {
       try {
         const resp = await getCableProviders();
-        setProviders(resp.providers ?? []);
+        const list = resp.providers ?? [];
+        cachedCableProviders = list;
+        setProviders(list);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Unable to load providers");
       }
@@ -61,6 +71,11 @@ export default function CableBillsPage() {
   useEffect(() => {
     if (!selectedProvider) return;
     const loadPlans = async () => {
+      const cached = cachedCablePlans.get(selectedProvider);
+      if (cached) {
+        setPlans(cached);
+        return;
+      }
       setPlans([]);
       setSelectedPlan("");
       try {
@@ -70,6 +85,7 @@ export default function CableBillsPage() {
           amount: Number(p.amount ?? 0),
           label: p.description || p.display || p.plan_code,
         }));
+        cachedCablePlans.set(selectedProvider, list);
         setPlans(list);
       } catch (e) {
         setError(e instanceof Error ? e.message : "Unable to load plans");

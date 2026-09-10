@@ -22,6 +22,10 @@ import { App_Modal } from "@/components/ui_components/app_modal";
 
 const NETWORKS = ["MTN", "Airtel", "9Mobile", "Glo"] as const;
 
+// Module-level cache so revisits don't refetch or flash empty selects
+let cachedAirtimeNetworks: Array<{ name?: string; code?: string }> | null =
+  null;
+
 export default function BuyAirtimePage() {
   const router = useRouter();
   const { isAuthenticated, isHydrated, authenticatedRequest, user } =
@@ -34,7 +38,7 @@ export default function BuyAirtimePage() {
   const [error, setError] = useState<string | null>(null);
   const [networks, setNetworks] = useState<
     Array<{ name?: string; code?: string }>
-  >([]);
+  >(cachedAirtimeNetworks ?? []);
   const [showPin, setShowPin] = useState(false);
   const [pin, setPin] = useState("");
 
@@ -57,9 +61,12 @@ export default function BuyAirtimePage() {
           name: String(n.name ?? n.network ?? n.code ?? n),
           code: String(n.code ?? n.network ?? n.name ?? n),
         }));
+        cachedAirtimeNetworks = list;
         setNetworks(list);
       } catch {
-        setNetworks(NETWORKS.map((n) => ({ name: n, code: n })));
+        const fallback = NETWORKS.map((n) => ({ name: n, code: n }));
+        cachedAirtimeNetworks = fallback;
+        setNetworks((prev) => (prev.length ? prev : fallback));
       }
     };
 
