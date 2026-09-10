@@ -35,9 +35,7 @@ export function TransactionPinModal(props: {
       title={title ?? "Authorize transfer"}
       footer={
         <>
-          <App_Button variant="outline" onClick={onClose}>
-            Cancel
-          </App_Button>
+          <App_Button onClick={onClose}>Cancel</App_Button>
           <App_Button
             onClick={onConfirm}
             disabled={(pin?.length ?? 0) < 4}
