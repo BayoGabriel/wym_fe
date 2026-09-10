@@ -18,6 +18,8 @@ import MtnLogo from "@/assets/svgs/mtn.svg";
 import GloLogo from "@/assets/svgs/glo.svg";
 import NineMobileLogo from "@/assets/svgs/9mobile.svg";
 import { IoChevronBack } from "react-icons/io5";
+import PinInput from "@/components/ui_components/pin_input";
+import { App_Modal } from "@/components/ui_components/app_modal";
 
 const NETWORKS = ["MTN", "Airtel", "9Mobile", "Glo"] as const;
 
@@ -38,6 +40,8 @@ export default function BuyDataPage() {
   const [networks, setNetworks] = useState<
     Array<{ name?: string; code?: string }>
   >([]);
+  const [showPin, setShowPin] = useState(false);
+  const [pin, setPin] = useState("");
 
   const currencyCode = (user?.currencyCode ?? "NGN").toUpperCase();
   const countryCode = (user?.countryCode ?? "NG").toUpperCase();
@@ -146,6 +150,10 @@ export default function BuyDataPage() {
   }, [mobileDigits.length, network, selectedPlan]);
 
   const handleSubmit = async () => {
+    setShowPin(true);
+  };
+
+  const confirmSubmit = async () => {
     if (!authenticatedRequest) return;
     setLoading(true);
     setError(null);
@@ -156,6 +164,7 @@ export default function BuyDataPage() {
         network,
         planCode: selectedPlan,
         mobileNumber: mobileDigits,
+        transactionPin: pin,
       });
       router.push("/dashboard/transactions");
     } catch (e) {
@@ -168,6 +177,8 @@ export default function BuyDataPage() {
       setError(msg);
     } finally {
       setLoading(false);
+      setShowPin(false);
+      setPin("");
     }
   };
 
@@ -259,6 +270,42 @@ export default function BuyDataPage() {
             </App_Button>
           </div>
         </section>
+        <App_Modal
+          open={showPin}
+          onClose={() => {
+            if (!loading) {
+              setShowPin(false);
+              setPin("");
+            }
+          }}
+          title="Enter Transaction PIN"
+          footer={
+            <>
+              <App_Button
+                variant="secondary"
+                onClick={() => setShowPin(false)}
+                disabled={loading}
+              >
+                Cancel
+              </App_Button>
+              <App_Button
+                onClick={confirmSubmit}
+                disabled={pin.length !== 4}
+                loading={loading}
+              >
+                Confirm Payment
+              </App_Button>
+            </>
+          }
+        >
+          <App_Text variant="body" className="text-secondary">
+            For your security, confirm this purchase with your 4-digit
+            transaction PIN.
+          </App_Text>
+          <div className="flex justify-center py-2">
+            <PinInput length={4} onChange={setPin} disabled={loading} />
+          </div>
+        </App_Modal>
       </div>
     </main>
   );

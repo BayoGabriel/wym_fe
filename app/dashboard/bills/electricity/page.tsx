@@ -13,6 +13,8 @@ import {
   verifyElectricity,
 } from "@/features/bills/api/bills_endpoints";
 import { IoChevronBack } from "react-icons/io5";
+import PinInput from "@/components/ui_components/pin_input";
+import { App_Modal } from "@/components/ui_components/app_modal";
 
 export default function ElectricityBillsPage() {
   const router = useRouter();
@@ -21,12 +23,14 @@ export default function ElectricityBillsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [plans, setPlans] = useState<Array<{
-    plan_code: string;
-    plan_name: string;
-    min_amount: number;
-    max_amount: number;
-  }>>([]);
+  const [plans, setPlans] = useState<
+    Array<{
+      plan_code: string;
+      plan_name: string;
+      min_amount: number;
+      max_amount: number;
+    }>
+  >([]);
   const [selectedPlan, setSelectedPlan] = useState<string>("");
 
   const [meter, setMeter] = useState("");
@@ -34,6 +38,8 @@ export default function ElectricityBillsPage() {
   const [phone, setPhone] = useState("");
   const [customerName, setCustomerName] = useState<string | null>(null);
   const [amount, setAmount] = useState<number>(0);
+  const [showPin, setShowPin] = useState(false);
+  const [pin, setPin] = useState("");
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -85,6 +91,10 @@ export default function ElectricityBillsPage() {
   };
 
   const handlePurchase = async () => {
+    setShowPin(true);
+  };
+
+  const confirmPurchase = async () => {
     setLoading(true);
     setError(null);
     try {
@@ -96,6 +106,7 @@ export default function ElectricityBillsPage() {
         amount,
         type,
         phone,
+        transactionPin: pin,
       });
       router.push("/dashboard/transactions");
     } catch (e) {
@@ -103,6 +114,8 @@ export default function ElectricityBillsPage() {
       setError(msg);
     } finally {
       setLoading(false);
+      setShowPin(false);
+      setPin("");
     }
   };
 
@@ -130,7 +143,10 @@ export default function ElectricityBillsPage() {
                 label="Distribution Company"
                 value={selectedPlan}
                 onChange={(v) => setSelectedPlan(v)}
-                options={plans.map((p) => ({ label: p.plan_name, value: p.plan_code }))}
+                options={plans.map((p) => ({
+                  label: p.plan_name,
+                  value: p.plan_code,
+                }))}
                 placeholder="Choose provider"
               />
             </div>
@@ -147,7 +163,10 @@ export default function ElectricityBillsPage() {
                 label="Type"
                 value={type}
                 onChange={(v) => setType(v as any)}
-                options={[{ label: "Prepaid", value: "prepaid" }, { label: "Postpaid", value: "postpaid" }]}
+                options={[
+                  { label: "Prepaid", value: "prepaid" },
+                  { label: "Postpaid", value: "postpaid" },
+                ]}
                 placeholder="Meter type"
               />
             </div>
@@ -162,24 +181,76 @@ export default function ElectricityBillsPage() {
               onChange={(e) => setAmount(Number(e.currentTarget.value || 0))}
             />
 
-            <App_Input id="phone" label="Phone" value={phone} onChange={(e) => setPhone(e.currentTarget.value)} />
+            <App_Input
+              id="phone"
+              label="Phone"
+              value={phone}
+              onChange={(e) => setPhone(e.currentTarget.value)}
+            />
 
             <div className="flex items-center gap-3">
-              <App_Button onClick={handleVerify} disabled={!canVerify} variant="secondary">
+              <App_Button
+                onClick={handleVerify}
+                disabled={!canVerify}
+                variant="secondary"
+              >
                 Verify Meter
               </App_Button>
               {customerName ? (
-                <App_Text variant="body" className="text-success">Verified: {customerName}</App_Text>
+                <App_Text variant="body" className="text-success">
+                  Verified: {customerName}
+                </App_Text>
               ) : null}
             </div>
 
             {error ? <p className="text-sm text-error">{error}</p> : null}
 
-            <App_Button onClick={handlePurchase} disabled={!canSubmit} loading={loading} className="w-full">
+            <App_Button
+              onClick={handlePurchase}
+              disabled={!canSubmit}
+              loading={loading}
+              className="w-full"
+            >
               Pay Electricity Bill
             </App_Button>
           </div>
         </section>
+        <App_Modal
+          open={showPin}
+          onClose={() => {
+            if (!loading) {
+              setShowPin(false);
+              setPin("");
+            }
+          }}
+          title="Enter Transaction PIN"
+          footer={
+            <>
+              <App_Button
+                variant="secondary"
+                onClick={() => setShowPin(false)}
+                disabled={loading}
+              >
+                Cancel
+              </App_Button>
+              <App_Button
+                onClick={confirmPurchase}
+                disabled={pin.length !== 4}
+                loading={loading}
+              >
+                Confirm Payment
+              </App_Button>
+            </>
+          }
+        >
+          <App_Text variant="body" className="text-secondary">
+            For your security, confirm this payment with your 4-digit
+            transaction PIN.
+          </App_Text>
+          <div className="flex justify-center py-2">
+            <PinInput length={4} onChange={setPin} disabled={loading} />
+          </div>
+        </App_Modal>
       </div>
     </main>
   );

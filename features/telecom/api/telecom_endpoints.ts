@@ -47,6 +47,7 @@ export const purchaseAirtime = (
     amount: number;
     mobileNumber: string;
     provider?: "peyflex" | "reloadly";
+    transactionPin: string;
   },
 ) =>
   request<{ transaction: any }>("/telecom/airtime/purchase", {
@@ -62,6 +63,7 @@ export const purchaseData = (
     planCode: string;
     mobileNumber: string;
     provider?: "peyflex" | "reloadly";
+    transactionPin: string;
   },
 ) =>
   request<{ transaction: any }>("/telecom/data/purchase", {

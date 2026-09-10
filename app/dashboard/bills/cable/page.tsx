@@ -14,6 +14,8 @@ import {
   verifyCableIUC,
 } from "@/features/bills/api/bills_endpoints";
 import { IoChevronBack } from "react-icons/io5";
+import PinInput from "@/components/ui_components/pin_input";
+import { App_Modal } from "@/components/ui_components/app_modal";
 
 export default function CableBillsPage() {
   const router = useRouter();
@@ -22,15 +24,21 @@ export default function CableBillsPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [providers, setProviders] = useState<Array<{ identifier: string; name: string }>>([]);
+  const [providers, setProviders] = useState<
+    Array<{ identifier: string; name: string }>
+  >([]);
   const [selectedProvider, setSelectedProvider] = useState<string>("");
 
-  const [plans, setPlans] = useState<Array<{ plan_code: string; amount: number; label: string }>>([]);
+  const [plans, setPlans] = useState<
+    Array<{ plan_code: string; amount: number; label: string }>
+  >([]);
   const [selectedPlan, setSelectedPlan] = useState<string>("");
 
   const [iuc, setIuc] = useState("");
   const [phone, setPhone] = useState("");
   const [customerName, setCustomerName] = useState<string | null>(null);
+  const [showPin, setShowPin] = useState(false);
+  const [pin, setPin] = useState("");
 
   useEffect(() => {
     if (!isHydrated) return;
@@ -70,9 +78,16 @@ export default function CableBillsPage() {
     void loadPlans();
   }, [selectedProvider]);
 
-  const canVerify = useMemo(() => selectedProvider && iuc.trim().length >= 6, [selectedProvider, iuc]);
+  const canVerify = useMemo(
+    () => selectedProvider && iuc.trim().length >= 6,
+    [selectedProvider, iuc],
+  );
   const canSubmit = useMemo(
-    () => selectedProvider && selectedPlan && iuc.trim().length >= 6 && phone.trim().length >= 6,
+    () =>
+      selectedProvider &&
+      selectedPlan &&
+      iuc.trim().length >= 6 &&
+      phone.trim().length >= 6,
     [selectedProvider, selectedPlan, iuc, phone],
   );
 
@@ -88,6 +103,11 @@ export default function CableBillsPage() {
   };
 
   const handlePurchase = async () => {
+    // Open PIN modal first
+    setShowPin(true);
+  };
+
+  const confirmPurchase = async () => {
     setLoading(true);
     setError(null);
     try {
@@ -100,6 +120,7 @@ export default function CableBillsPage() {
         iuc,
         phone,
         amount: planInfo?.amount,
+        transactionPin: pin,
       });
       router.push("/dashboard/transactions");
     } catch (e) {
@@ -107,6 +128,8 @@ export default function CableBillsPage() {
       setError(msg);
     } finally {
       setLoading(false);
+      setShowPin(false);
+      setPin("");
     }
   };
 
@@ -134,7 +157,10 @@ export default function CableBillsPage() {
                 label="Provider"
                 value={selectedProvider}
                 onChange={(v) => setSelectedProvider(v)}
-                options={providers.map((p) => ({ label: p.name, value: p.identifier }))}
+                options={providers.map((p) => ({
+                  label: p.name,
+                  value: p.identifier,
+                }))}
                 placeholder="Choose provider"
               />
             </div>
@@ -146,30 +172,90 @@ export default function CableBillsPage() {
                 label="Plan"
                 value={selectedPlan}
                 onChange={(v) => setSelectedPlan(v)}
-                options={plans.map((p) => ({ label: `${p.label} • ₦${p.amount.toLocaleString("en-NG")}`, value: p.plan_code }))}
+                options={plans.map((p) => ({
+                  label: `${p.label} • ₦${p.amount.toLocaleString("en-NG")}`,
+                  value: p.plan_code,
+                }))}
                 placeholder="Choose plan"
               />
             </div>
 
-            <App_Input id="iuc" label="IUC Number" value={iuc} onChange={(e) => setIuc(e.currentTarget.value)} />
-            <App_Input id="phone" label="Phone" value={phone} onChange={(e) => setPhone(e.currentTarget.value)} />
+            <App_Input
+              id="iuc"
+              label="IUC Number"
+              value={iuc}
+              onChange={(e) => setIuc(e.currentTarget.value)}
+            />
+            <App_Input
+              id="phone"
+              label="Phone"
+              value={phone}
+              onChange={(e) => setPhone(e.currentTarget.value)}
+            />
 
             <div className="flex items-center gap-3">
-              <App_Button onClick={handleVerify} disabled={!canVerify} variant="secondary">
+              <App_Button
+                onClick={handleVerify}
+                disabled={!canVerify}
+                variant="secondary"
+              >
                 Verify IUC
               </App_Button>
               {customerName ? (
-                <App_Text variant="body" className="text-success">Verified: {customerName}</App_Text>
+                <App_Text variant="body" className="text-success">
+                  Verified: {customerName}
+                </App_Text>
               ) : null}
             </div>
 
             {error ? <p className="text-sm text-error">{error}</p> : null}
 
-            <App_Button onClick={handlePurchase} disabled={!canSubmit} loading={loading} className="w-full">
+            <App_Button
+              onClick={handlePurchase}
+              disabled={!canSubmit}
+              loading={loading}
+              className="w-full"
+            >
               Pay and Subscribe
             </App_Button>
           </div>
         </section>
+        <App_Modal
+          open={showPin}
+          onClose={() => {
+            if (!loading) {
+              setShowPin(false);
+              setPin("");
+            }
+          }}
+          title="Enter Transaction PIN"
+          footer={
+            <>
+              <App_Button
+                variant="secondary"
+                onClick={() => setShowPin(false)}
+                disabled={loading}
+              >
+                Cancel
+              </App_Button>
+              <App_Button
+                onClick={confirmPurchase}
+                disabled={pin.length !== 4}
+                loading={loading}
+              >
+                Confirm Payment
+              </App_Button>
+            </>
+          }
+        >
+          <App_Text variant="body" className="text-secondary">
+            For your security, confirm this payment with your 4-digit
+            transaction PIN.
+          </App_Text>
+          <div className="flex justify-center py-2">
+            <PinInput length={4} onChange={setPin} disabled={loading} />
+          </div>
+        </App_Modal>
       </div>
     </main>
   );

@@ -74,14 +74,16 @@ export const subscribeCable = async (payload: {
   iuc: string;
   phone: string;
   amount?: number;
+  transactionPin: string;
 }): Promise<{ transaction: any }> =>
   authenticatedRequest<{ transaction: any }>("/bills/cable/subscribe", {
     method: "POST",
     body: JSON.stringify(payload),
   });
 
-export const getElectricityPlans = async (): Promise<ElectricityPlansResponse> =>
-  authenticatedRequest<ElectricityPlansResponse>("/bills/electricity/plans");
+export const getElectricityPlans =
+  async (): Promise<ElectricityPlansResponse> =>
+    authenticatedRequest<ElectricityPlansResponse>("/bills/electricity/plans");
 
 export const verifyElectricity = async (payload: {
   meter: string;
@@ -101,6 +103,7 @@ export const subscribeElectricity = async (payload: {
   amount: number;
   type: string;
   phone: string;
+  transactionPin: string;
 }): Promise<{ transaction: any }> =>
   authenticatedRequest<{ transaction: any }>("/bills/electricity/subscribe", {
     method: "POST",
