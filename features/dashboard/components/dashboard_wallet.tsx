@@ -86,7 +86,7 @@ export const Dashboard_Wallet = ({
         </div>
         <div className="flex gap-2 sm:justify-end">
           <App_Button onClick={onFundWallet} className="px-4">
-            Add money
+            Fund
           </App_Button>
           {onTransfer ? (
             <App_Button variant="secondary" onClick={onTransfer} className="px-4">
