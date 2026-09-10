@@ -16,19 +16,48 @@ export function TransactionPinModal(props: {
   description?: string;
   confirmText?: string;
 }) {
-  const { open, onClose, onConfirm, pin, setPin, loading, error, title, description, confirmText } = props;
+  const {
+    open,
+    onClose,
+    onConfirm,
+    pin,
+    setPin,
+    loading,
+    error,
+    title,
+    description,
+    confirmText,
+  } = props;
   return (
-    <App_Modal open={open} onClose={onClose} title={title ?? "Authorize transfer"}
+    <App_Modal
+      open={open}
+      onClose={onClose}
+      title={title ?? "Authorize transfer"}
       footer={
         <>
-          <App_Button variant="ghost" onClick={onClose}>Cancel</App_Button>
-          <App_Button onClick={onConfirm} disabled={(pin?.length ?? 0) < 4} loading={!!loading}>{confirmText ?? "Authorize"}</App_Button>
+          <App_Button variant="outline" onClick={onClose}>
+            Cancel
+          </App_Button>
+          <App_Button
+            onClick={onConfirm}
+            disabled={(pin?.length ?? 0) < 4}
+            loading={!!loading}
+          >
+            {confirmText ?? "Authorize"}
+          </App_Button>
         </>
       }
     >
-      {description ? <p className="text-sm text-gray-600">{description}</p> : null}
+      {description ? (
+        <p className="text-sm text-gray-600">{description}</p>
+      ) : null}
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
-      <PinInput value={pin} setValue={setPin} length={4} />
+      <PinInput
+        length={4}
+        onChange={setPin}
+        onComplete={setPin}
+        disabled={!!loading}
+      />
     </App_Modal>
   );
 }
