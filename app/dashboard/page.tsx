@@ -6,15 +6,10 @@ import { useEffect } from "react";
 import { Use_Auth_Context } from "@/features/auth/api/auth_context";
 import { Use_Dashboard_Context } from "@/features/dashboard/api/dashboard_context";
 import { DashboardHeader } from "@/features/dashboard/components/dashboard_header";
-import { WalletCard } from "@/features/dashboard/components/wallet_card";
-import { QuickActionCard } from "@/features/dashboard/components/quick_action_card";
-import { AnalyticsCard } from "@/features/dashboard/components/analytics_card";
-import { TransactionList } from "@/features/dashboard/components/transaction_list";
-import {
-  Icon_Phone,
-  Icon_ArrowUpRight,
-  Icon_History,
-} from "@/components/ui_components/app_icons";
+import { Dashboard_Wallet } from "@/features/dashboard/components/dashboard_wallet";
+import { Dashboard_Quick_Actions } from "@/features/dashboard/components/dashboard_quick_actions";
+import { Dashboard_Transactions } from "@/features/dashboard/components/dashboard_transactions";
+import { Dashboard_Spending } from "@/features/dashboard/components/dashboard_spending";
 import { App_Text } from "@/components/ui_components/app_text";
 
 export default function DashboardPage() {
@@ -35,17 +30,14 @@ export default function DashboardPage() {
   if (!isHydrated) return <div className="min-h-screen bg-background" />;
   if (!isAuthenticated || !user) return null;
 
-  const handleLogout = async () => {
-    await logout();
-    router.replace("/auth/login");
-  };
+  // logout remains in profile page; remove from dashboard per product direction
 
   const handleFundWallet = () => {
     router.push("/dashboard/fund");
   };
 
   const handleTransfer = () => {
-    router.push("/dashboard/transfer");
+    router.push("/dashboard/payout/account");
   };
 
   const handleBuyAirtime = () => {
@@ -68,15 +60,12 @@ export default function DashboardPage() {
     return (
       <main className="min-h-screen bg-background px-4 py-8 sm:px-6 lg:px-10">
         <div className="mx-auto flex w-full max-w-5xl flex-col gap-6">
-          <div className="h-32 animate-pulse rounded-3xl border border-border bg-surface" />
-          <div className="h-64 animate-pulse rounded-3xl border border-border bg-surface" />
-          <div className="grid gap-4 md:grid-cols-4">
-            {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="h-32 animate-pulse rounded-3xl border border-border bg-surface"
-              />
-            ))}
+          <div className="h-16 animate-pulse rounded-2xl border border-border bg-surface" />
+          <div className="h-40 animate-pulse rounded-2xl border border-border bg-surface" />
+          <div className="h-24 animate-pulse rounded-2xl border border-border bg-surface" />
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="h-64 animate-pulse rounded-2xl border border-border bg-surface md:col-span-2" />
+            <div className="h-64 animate-pulse rounded-2xl border border-border bg-surface" />
           </div>
         </div>
       </main>
@@ -110,11 +99,11 @@ export default function DashboardPage() {
   if (!home) return null;
 
   return (
-    <main className="min-h-screen bg-background px-2 max-lg:py-4 py-8 sm:px-6 lg:px-10">
-      <div className="mx-auto flex w-full flex-col gap-6">
+    <main className="min-h-screen bg-background px-3 py-6 sm:px-6 lg:px-10 lg:py-8">
+      <div className="mx-auto w-full max-w-6xl space-y-6">
         <DashboardHeader fullName={home.user.fullName} />
 
-        <WalletCard
+        <Dashboard_Wallet
           balance={home.wallet.balance}
           currency={home.wallet.currency}
           accountNumber={home.wallet.accountNumber}
@@ -123,69 +112,25 @@ export default function DashboardPage() {
           onTransfer={handleTransfer}
         />
 
-        <section className="mt-4">
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <QuickActionCard
-              title="Bills"
-              description="Airtime, Data, Cable, Electricity"
-              icon={<Icon_Phone className="size-5" />}
-              onClick={handleBills}
-            />
-            <QuickActionCard
-              title="Add funds"
-              description="Top up your wallet"
-              icon={<Icon_ArrowUpRight className="size-5" />}
-              onClick={handleFundWallet}
-            />
-            <QuickActionCard
-              title="Transactions"
-              description="View history"
-              icon={<Icon_History className="size-5" />}
-              onClick={handleViewTransactions}
+        <Dashboard_Quick_Actions />
+
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <Dashboard_Transactions
+              transactions={home.recentTransactions}
+              onViewAll={handleViewTransactions}
             />
           </div>
-        </section>
-
-        <section>
-          <App_Text variant="subtitle">Analytics</App_Text>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <AnalyticsCard
-              label="Total Funded"
-              value={home.wallet.currency}
-              trendLabel={home.analytics.totalFunded.toLocaleString("en-NG", {
-                maximumFractionDigits: 2,
-              })}
-            />
-            <AnalyticsCard
-              label="Total Spent"
-              value={home.wallet.currency}
-              trendLabel={home.analytics.totalSpent.toLocaleString("en-NG", {
-                maximumFractionDigits: 2,
-              })}
-            />
-            <AnalyticsCard
-              label="Airtime Purchases"
-              value={home.analytics.airtimePurchases.toString()}
-            />
-            <AnalyticsCard
-              label="Data Purchases"
-              value={home.analytics.dataPurchases.toString()}
+          <div>
+            <Dashboard_Spending
+              totalSpent={home.analytics.totalSpent}
+              totalFunded={home.analytics.totalFunded}
+              airtimePurchases={home.analytics.airtimePurchases}
+              dataPurchases={home.analytics.dataPurchases}
+              currency={home.wallet.currency}
             />
           </div>
-        </section>
-
-        <TransactionList
-          transactions={home.recentTransactions}
-          onViewAll={handleViewTransactions}
-        />
-
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="self-start rounded-xl border border-border bg-surface px-4 py-2 text-sm font-semibold text-secondary transition hover:bg-primarySoft"
-        >
-          Logout
-        </button>
+        </div>
       </div>
     </main>
   );
